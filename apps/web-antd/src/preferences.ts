@@ -20,4 +20,7 @@ export const overridesPreferences = defineOverridesPreferences({
   shortcutKeys: {
     enable: false,
   },
+  theme: {
+    radius: '0.25',
+  },
 });
