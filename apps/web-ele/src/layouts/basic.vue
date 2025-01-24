@@ -5,6 +5,7 @@ import { computed, ref, watch } from 'vue';
 
 import { AuthenticationLoginExpiredModal } from '@vben/common-ui';
 import { useWatermark } from '@vben/hooks';
+import { ChangePassword } from '@vben/icons';
 import { BasicLayout, LockScreen, Notification, UserDropdown } from '@vben/layouts';
 import { preferences } from '@vben/preferences';
 import { useAccessStore, useUserStore } from '@vben/stores';
@@ -50,15 +51,13 @@ const { destroyWatermark, updateWatermark } = useWatermark();
 const showDot = computed(() => notifications.value.some((item) => !item.isRead));
 
 const menus = computed(() => [
-  // {
-  //   handler: () => {
-  //     openWindow(VBEN_DOC_URL, {
-  //       target: '_blank',
-  //     });
-  //   },
-  //   icon: BookOpenText,
-  //   text: $t('ui.widgets.document'),
-  // },
+  {
+    handler: () => {
+      //
+    },
+    icon: ChangePassword,
+    text: '修改密码',
+  },
   // {
   //   handler: () => {
   //     openWindow(VBEN_GITHUB_URL, {
@@ -83,8 +82,8 @@ const avatar = computed(() => {
   return userStore.userInfo?.avatar ?? preferences.app.defaultAvatar;
 });
 
-const userName = computed(() => {
-  return userStore.userInfo?.realName ?? userStore.userInfo?.username;
+const tag = computed(() => {
+  return userStore.userInfo?.isAdmin ? '管理员' : '普通用户';
 });
 
 const email = computed(() => {
@@ -127,7 +126,7 @@ watch(
         :menus
         :text="userStore.userInfo?.realName"
         :description="email"
-        :tag-text="userName"
+        :tag-text="tag"
         @logout="handleLogout"
       />
     </template>
