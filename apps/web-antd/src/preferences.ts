@@ -9,6 +9,15 @@ export const overridesPreferences = defineOverridesPreferences({
   // overrides
   app: {
     name: import.meta.env.VITE_APP_TITLE,
-    enableRefreshToken: true,
+    enableRefreshToken: true, // 是否开启刷新token
+  },
+  widget: {
+    globalSearch: false,
+    languageToggle: false,
+    themeToggle: false,
+    notification: false,
+  },
+  shortcutKeys: {
+    enable: false,
   },
 });
