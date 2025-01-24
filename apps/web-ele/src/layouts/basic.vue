@@ -5,12 +5,7 @@ import { computed, ref, watch } from 'vue';
 
 import { AuthenticationLoginExpiredModal } from '@vben/common-ui';
 import { useWatermark } from '@vben/hooks';
-import {
-  BasicLayout,
-  LockScreen,
-  Notification,
-  UserDropdown,
-} from '@vben/layouts';
+import { BasicLayout, LockScreen, Notification, UserDropdown } from '@vben/layouts';
 import { preferences } from '@vben/preferences';
 import { useAccessStore, useUserStore } from '@vben/stores';
 
@@ -52,9 +47,7 @@ const userStore = useUserStore();
 const authStore = useAuthStore();
 const accessStore = useAccessStore();
 const { destroyWatermark, updateWatermark } = useWatermark();
-const showDot = computed(() =>
-  notifications.value.some((item) => !item.isRead),
-);
+const showDot = computed(() => notifications.value.some((item) => !item.isRead));
 
 const menus = computed(() => [
   // {
@@ -88,6 +81,14 @@ const menus = computed(() => [
 
 const avatar = computed(() => {
   return userStore.userInfo?.avatar ?? preferences.app.defaultAvatar;
+});
+
+const userName = computed(() => {
+  return userStore.userInfo?.realName ?? userStore.userInfo?.username;
+});
+
+const email = computed(() => {
+  return userStore.userInfo?.email;
 });
 
 async function handleLogout() {
@@ -125,8 +126,8 @@ watch(
         :avatar
         :menus
         :text="userStore.userInfo?.realName"
-        description="ann.vben@gmail.com"
-        tag-text="Pro"
+        :description="email"
+        :tag-text="userName"
         @logout="handleLogout"
       />
     </template>
@@ -139,10 +140,7 @@ watch(
       />
     </template>
     <template #extra>
-      <AuthenticationLoginExpiredModal
-        v-model:open="accessStore.loginExpired"
-        :avatar
-      >
+      <AuthenticationLoginExpiredModal v-model:open="accessStore.loginExpired" :avatar>
         <LoginForm />
       </AuthenticationLoginExpiredModal>
     </template>
