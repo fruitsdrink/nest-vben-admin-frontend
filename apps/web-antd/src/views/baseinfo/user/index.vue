@@ -2,6 +2,7 @@
 import { Page } from '@vben/common-ui';
 
 import { Popconfirm, Tag } from 'ant-design-vue';
+import dayjs from 'dayjs';
 
 import { ButtonDelete, ButtonEdit, ButtonNew } from '#/components/buttons';
 
@@ -29,11 +30,17 @@ const { Grid, FormModal, handleCreate, handleEdit, handleDelete } = useHook();
         <Tag :color="row.isAdmin ? 'red' : 'default'">{{ row.isAdmin ? '是' : '否' }}</Tag>
       </template>
 
+      <template #lastLoginAt="{ row }">
+        {{ row.lastLoginAt ? dayjs(row.lastLoginAt).format('YYYY-MM-DD HH:mm:ss') : '' }}
+      </template>
+
       <template #action="{ row }">
         <ButtonEdit @click="handleEdit(row.id)" :disabled="!row.canEdit" />
+
         <Popconfirm title="确定删除吗?" @confirm="handleDelete(row.id)">
           <ButtonDelete :disabled="!row.canDelete" />
         </Popconfirm>
+
         <Popconfirm title="确定重置密码吗?" @confirm="handleDelete(row.id)">
           <ButtonDelete title="重置密码" />
         </Popconfirm>

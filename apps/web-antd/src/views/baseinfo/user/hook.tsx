@@ -3,12 +3,14 @@ import type { RowType } from './types';
 import type { VbenFormProps } from '#/adapter/form';
 import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 
+import { onMounted } from 'vue';
+
 import { useVbenModal } from '@vben/common-ui';
 
 import { message } from 'ant-design-vue';
 
 import { useVbenVxeGrid } from '#/adapter/vxe-table';
-import { UserApi } from '#/api';
+import { DepartmentApi, UserApi } from '#/api';
 
 import Form from './form.vue';
 
@@ -26,6 +28,16 @@ export const useHook = () => {
         componentProps: {
           allowClear: true,
         },
+      },
+      {
+        component: 'Select',
+        componentProps: {
+          allowClear: true,
+          options: [],
+          placeholder: '请选择',
+        },
+        fieldName: 'departmentId',
+        label: '所属部门',
       },
       {
         component: 'Select',
@@ -67,7 +79,12 @@ export const useHook = () => {
       { field: 'isAdmin', title: '管理员', slots: { default: 'isAdmin' } },
       { field: 'department.name', title: '部门' },
       { field: 'status', title: '有效状态', slots: { default: 'status' } },
-      { field: 'lastLoginAt', title: '最后登录时间' },
+      {
+        field: 'lastLoginAt',
+        title: '最后登录时间',
+        slots: { default: 'lastLoginAt' },
+        width: 160,
+      },
       { field: 'lastLoginIp', title: '最后登录IP' },
       { title: '操作', width: 300, slots: { default: 'action' } },
     ],
@@ -162,6 +179,22 @@ export const useHook = () => {
         });
       });
   };
+
+  onMounted(async () => {
+    const departmentRes = await DepartmentApi.findMany();
+
+    gridApi.formApi.updateSchema([
+      {
+        fieldName: 'departmentId',
+        componentProps: {
+          options: departmentRes.map((item) => ({
+            label: item.name,
+            value: item.id,
+          })),
+        },
+      },
+    ]);
+  });
 
   return { Grid, FormModal, handleCreate, handleEdit, handleDelete };
 };
