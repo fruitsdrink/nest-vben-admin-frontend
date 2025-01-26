@@ -178,7 +178,11 @@ const [Modal, modalApi] = useVbenModal({
   onOpenChange(isOpen: boolean) {
     if (isOpen) {
       const { values } = modalApi.getData<{ values: RoleApi.SaveParams }>();
-
+      const id = modalApi.getData().values.id;
+      if (id) {
+        // 编辑模式，去除密码字段
+        formApi.removeSchemaByFields(['password']);
+      }
       if (values) {
         formApi.setValues(values);
       }
