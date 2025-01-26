@@ -20,7 +20,7 @@ export namespace DepartmentApi {
   };
 
   /**
-   * 新增部门
+   * 新增/编辑部门
    */
   export async function save(data: SaveParams) {
     if (data.id) {
@@ -29,14 +29,22 @@ export namespace DepartmentApi {
     return requestClient.post<SaveResult>('/baseinfo/department', data);
   }
 
-  export async function findList(params: PaginationParams) {
+  /**
+   * 查询部门列表
+   */
+  export async function findList(params: FindListParams) {
     return requestClient.get<DepartmentDto[]>('/baseinfo/department', { params });
   }
-
+  /**
+   * 根据id查询部门
+   */
   export async function findById(id: number) {
     return requestClient.get<DepartmentDto>(`/baseinfo/department/find/${id}`);
   }
 
+  /**
+   * 删除部门
+   */
   export async function deleteById(id: number) {
     return requestClient.delete(`/baseinfo/department/${id}`);
   }

@@ -1,10 +1,7 @@
 export interface RowType {
   id: number;
   name: string;
-  leader?: string;
-  phone: string;
   sort: number;
   status: 0 | 1;
   remark?: string;
-  parentId?: number;
 }

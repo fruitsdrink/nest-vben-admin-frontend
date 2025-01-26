@@ -4,7 +4,7 @@ import { useVbenModal } from '@vben/common-ui';
 import { message } from 'ant-design-vue';
 
 import { useVbenForm } from '#/adapter/form';
-import { DepartmentApi } from '#/api';
+import { RoleApi } from '#/api';
 
 defineOptions({
   name: 'FormDepartment',
@@ -16,30 +16,12 @@ const [Form, formApi] = useVbenForm({
     {
       component: 'Input',
       componentProps: {
-        placeholder: '请输入部门名称',
+        placeholder: '请输入角色名称',
         allowClear: true,
       },
       fieldName: 'name',
-      label: '部门名称',
+      label: '角色名称',
       rules: 'required',
-    },
-    {
-      component: 'Input',
-      componentProps: {
-        placeholder: '请输入负责人',
-        allowClear: true,
-      },
-      fieldName: 'leader',
-      label: '负责人',
-    },
-    {
-      component: 'Input',
-      componentProps: {
-        placeholder: '请输入电话',
-        allowClear: true,
-      },
-      fieldName: 'phone',
-      label: '电话',
     },
     {
       component: 'InputNumber',
@@ -89,7 +71,7 @@ const [Modal, modalApi] = useVbenModal({
   },
   onOpenChange(isOpen: boolean) {
     if (isOpen) {
-      const { values } = modalApi.getData<{ values: DepartmentApi.SaveParams }>();
+      const { values } = modalApi.getData<{ values: RoleApi.SaveParams }>();
 
       if (values) {
         formApi.setValues(values);
@@ -108,18 +90,18 @@ function onSubmit(values: Record<string, any>) {
   const id = modalApi.getData().values.id;
 
   modalApi.lock();
-  DepartmentApi.save({ ...values, id })
+  RoleApi.save({ ...values, id })
     .then(() => {
       modalApi.close();
       message.success({
-        content: `${id ? '编辑' : '新增'}部门成功`,
+        content: `${id ? '编辑' : '新增'}角色成功`,
         duration: 2,
         key: 'is-form-submitting',
       });
     })
     .catch(() => {
       message.error({
-        content: `${id ? '编辑' : '新增'}部门失败`,
+        content: `${id ? '编辑' : '新增'}角色失败`,
         duration: 2,
         key: 'is-form-submitting',
       });
