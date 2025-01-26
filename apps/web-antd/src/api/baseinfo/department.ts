@@ -3,7 +3,7 @@ import type { PaginationParams } from '#/types';
 import { requestClient } from '#/api/request';
 
 export namespace DepartmentApi {
-  interface DepartmentDto {
+  export interface DepartmentDto {
     id: number;
     name: string;
     leader?: string;
@@ -11,6 +11,8 @@ export namespace DepartmentApi {
     parentId?: number;
     remark?: string;
     status?: 0 | 1;
+    sort: number;
+    createdAt: Date;
   }
 
   export type SaveParams = Partial<DepartmentDto>;
@@ -35,6 +37,14 @@ export namespace DepartmentApi {
   export async function findList(params: FindListParams) {
     return requestClient.get<DepartmentDto[]>('/baseinfo/department', { params });
   }
+
+  /**
+   * 查询所有部门
+   */
+  export async function findMany() {
+    return requestClient.get<DepartmentDto[]>('/baseinfo/department/find');
+  }
+
   /**
    * 根据id查询部门
    */

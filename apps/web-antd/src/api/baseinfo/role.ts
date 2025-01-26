@@ -3,11 +3,13 @@ import type { PaginationParams } from '#/types';
 import { requestClient } from '#/api/request';
 
 export namespace RoleApi {
-  interface RoleDto {
+  export interface RoleDto {
     id: number;
     name: string;
     remark?: string;
     status?: 0 | 1;
+    sort: number;
+    createdAt: Date;
   }
 
   export type SaveParams = Partial<RoleDto>;
@@ -27,10 +29,17 @@ export namespace RoleApi {
   }
 
   /**
-   * 查询角色列表
+   * 查询分页角色列表
    */
   export async function findList(params: FindListParams) {
     return requestClient.get<RoleDto[]>('/baseinfo/role', { params });
+  }
+
+  /**
+   * 查询所有角色
+   */
+  export async function findMany() {
+    return requestClient.get<RoleDto[]>('/baseinfo/role/find');
   }
   /**
    * 根据id查询角色

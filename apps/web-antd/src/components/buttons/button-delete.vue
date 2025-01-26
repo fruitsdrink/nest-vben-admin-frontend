@@ -1,10 +1,14 @@
 <script setup lang="ts">
 import { Button } from 'ant-design-vue';
 
-const { disabled } = defineProps({
+const { disabled, title } = defineProps({
   disabled: {
     type: Boolean,
     default: false,
+  },
+  title: {
+    type: String,
+    default: '删除',
   },
 });
 const emit = defineEmits(['click']);
@@ -20,6 +24,6 @@ const emit = defineEmits(['click']);
       }
     "
   >
-    删除
+    {{ title }}
   </Button>
 </template>

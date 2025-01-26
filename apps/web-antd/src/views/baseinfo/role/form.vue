@@ -32,6 +32,7 @@ const [Form, formApi] = useVbenForm({
       label: '排序编号',
       controlClass: 'w-full',
       rules: 'required',
+      defaultValue: 0,
     },
     {
       component: 'Input',
