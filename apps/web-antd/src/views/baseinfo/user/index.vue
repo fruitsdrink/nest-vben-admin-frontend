@@ -8,7 +8,8 @@ import { ButtonDelete, ButtonEdit, ButtonNew } from '#/components/buttons';
 
 import { useHook } from './hook';
 
-const { Grid, FormModal, handleCreate, handleEdit, handleDelete } = useHook();
+const { Grid, FormModal, ResetPasswordFormModal, handleCreate, handleEdit, handleDelete, handleResetPassword } =
+  useHook();
 </script>
 
 <template>
@@ -41,11 +42,12 @@ const { Grid, FormModal, handleCreate, handleEdit, handleDelete } = useHook();
           <ButtonDelete :disabled="!row.canDelete" />
         </Popconfirm>
 
-        <Popconfirm title="确定重置密码吗?" @confirm="handleDelete(row.id)">
+        <Popconfirm title="确定重置密码吗?" @confirm="handleResetPassword(row.id, row.username)">
           <ButtonDelete title="重置密码" />
         </Popconfirm>
       </template>
     </Grid>
     <FormModal />
+    <ResetPasswordFormModal />
   </Page>
 </template>

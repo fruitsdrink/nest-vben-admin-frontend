@@ -13,6 +13,7 @@ import { useVbenVxeGrid } from '#/adapter/vxe-table';
 import { DepartmentApi, UserApi } from '#/api';
 
 import Form from './form.vue';
+import ResetPasswordForm from './reset-password-form.vue';
 
 export const useHook = () => {
   const formOptions: VbenFormProps = {
@@ -135,6 +136,10 @@ export const useHook = () => {
     class: 'w-[800px]',
   });
 
+  const [ResetPasswordFormModal, resetPasswordFormModalApi] = useVbenModal({
+    connectedComponent: ResetPasswordForm,
+  });
+
   async function openForm(id?: number) {
     const row = id ? await UserApi.findById(id) : { status: 1 };
     formModalApi
@@ -180,6 +185,17 @@ export const useHook = () => {
       });
   };
 
+  const handleResetPassword = (userId: number, username: string) => {
+    resetPasswordFormModalApi
+      .setData({
+        values: { userId, username },
+      })
+      .setState({
+        title: '重置密码',
+      })
+      .open();
+  };
+
   onMounted(async () => {
     const departmentRes = await DepartmentApi.findMany();
 
@@ -196,5 +212,13 @@ export const useHook = () => {
     ]);
   });
 
-  return { Grid, FormModal, handleCreate, handleEdit, handleDelete };
+  return {
+    Grid,
+    FormModal,
+    ResetPasswordFormModal,
+    handleCreate,
+    handleEdit,
+    handleDelete,
+    handleResetPassword,
+  };
 };

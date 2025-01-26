@@ -63,4 +63,11 @@ export namespace UserApi {
   export async function deleteById(id: number) {
     return requestClient.delete(`/baseinfo/user/${id}`);
   }
+
+  /**
+   * 重置密码
+   */
+  export async function resetPassword(data: { password: string; userId: number }) {
+    return requestClient.post('/baseinfo/user/reset-password', data);
+  }
 }
