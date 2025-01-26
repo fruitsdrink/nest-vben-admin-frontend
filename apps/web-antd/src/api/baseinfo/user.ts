@@ -70,4 +70,22 @@ export namespace UserApi {
   export async function resetPassword(data: { password: string; userId: number }) {
     return requestClient.post('/baseinfo/user/reset-password', data);
   }
+
+  /**
+   * 校验密码
+   * @param password 密码
+   */
+  export async function validatePassword(password: string) {
+    return requestClient.post('/baseinfo/user/validate-password', { password });
+  }
+
+  /**
+   * 修改密码
+   * @param data
+   * newPassword 新密码
+   * password 旧密码
+   */
+  export async function editPassword(data: { newPassword: string; password: string }) {
+    return requestClient.post('/baseinfo/user/edit-password', data);
+  }
 }

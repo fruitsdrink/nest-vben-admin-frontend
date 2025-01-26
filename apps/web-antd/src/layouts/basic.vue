@@ -12,6 +12,7 @@ import { useAccessStore, useUserStore } from '@vben/stores';
 
 import { useAuthStore } from '#/store';
 import LoginForm from '#/views/_core/authentication/login.vue';
+import { useHook } from '#/views/baseinfo/user/hook';
 
 const notifications = ref<NotificationItem[]>([
   {
@@ -50,10 +51,12 @@ const accessStore = useAccessStore();
 const { destroyWatermark, updateWatermark } = useWatermark();
 const showDot = computed(() => notifications.value.some((item) => !item.isRead));
 
+const { EditPasswordFormModal, handleEditPassword } = useHook();
+
 const menus = computed(() => [
   {
     handler: () => {
-      //
+      handleEditPassword();
     },
     icon: ChangePassword,
     text: '修改密码',
@@ -147,4 +150,5 @@ watch(
       <LockScreen :avatar @to-login="handleLogout" />
     </template>
   </BasicLayout>
+  <EditPasswordFormModal />
 </template>

@@ -5,23 +5,17 @@ import { message } from 'ant-design-vue';
 
 import { useVbenForm, z } from '#/adapter/form';
 import { UserApi } from '#/api';
+import { useAuthStore } from '#/store';
 
 defineOptions({
   name: 'FormDepartment',
 });
 
+const authStore = useAuthStore();
+
 const [Form, formApi] = useVbenForm({
   handleSubmit: onSubmit,
   schema: [
-    {
-      component: 'Input',
-      componentProps: {
-        allowClear: true,
-        readonly: true,
-      },
-      fieldName: 'username',
-      label: '用户名称',
-    },
     {
       component: 'InputPassword',
       componentProps: {
@@ -35,22 +29,32 @@ const [Form, formApi] = useVbenForm({
     {
       component: 'InputPassword',
       componentProps: {
-        placeholder: '请再次输入登录密码',
+        placeholder: '请输入新登录密码',
         allowClear: true,
       },
-      fieldName: 'password2',
-      label: '确认密码',
+      fieldName: 'newPassword',
+      label: '新登录密码',
+      rules: 'required',
+    },
+    {
+      component: 'InputPassword',
+      componentProps: {
+        placeholder: '请再次输入新登录密码',
+        allowClear: true,
+      },
+      fieldName: 'newPassword2',
+      label: '确认新登录密码',
       dependencies: {
         rules(values) {
-          const { password } = values;
+          const { newPassword } = values;
           return z
             .string({ required_error: '请输入确认密码' })
             .min(1, { message: '请输入确认密码' })
-            .refine((value) => value === password, {
+            .refine((value) => value === newPassword, {
               message: '两次输入的密码不一致',
             });
         },
-        triggerFields: ['password'],
+        triggerFields: ['newPassword'],
       },
     },
   ],
@@ -59,19 +63,36 @@ const [Form, formApi] = useVbenForm({
 
 const [Modal, modalApi] = useVbenModal({
   fullscreenButton: false,
-  title: '重置密码',
+  title: '修改密码',
   onCancel() {
     modalApi.close();
   },
   onConfirm: async () => {
-    await formApi.validateAndSubmitForm();
+    await formApi.validate();
+    const values = await formApi.getValues();
+    const password = values.password;
+
+    try {
+      const res = await UserApi.validatePassword(password);
+      if (!res || !res.isok) {
+        throw new Error('原登录密码错误');
+      }
+
+      formApi.submitForm();
+    } catch {
+      message.destroy();
+      message.error({
+        content: `原登录密码错误`,
+        duration: 2,
+        key: 'is-form-submitting',
+      });
+    }
+    // await formApi.validateAndSubmitForm();
     // modalApi.close();
   },
   onOpenChange(isOpen: boolean) {
     if (isOpen) {
-      const { values } = modalApi.getData<{
-        values: Parameters<typeof UserApi.resetPassword>[0];
-      }>();
+      const { values } = modalApi.getData<{ values: Parameters<typeof UserApi.editPassword>[0] }>();
 
       if (values) {
         formApi.setValues(values);
@@ -87,21 +108,22 @@ function onSubmit(values: Record<string, any>) {
     duration: 0,
     key: 'is-form-submitting',
   });
-  const userId = modalApi.getData().values.userId;
 
   modalApi.lock();
-  UserApi.resetPassword({ userId, password: values.password })
-    .then(() => {
+  UserApi.editPassword({ password: values.password, newPassword: values.newPassword })
+    .then(async () => {
       modalApi.close();
       message.success({
-        content: `重置密码成功`,
+        content: `修改密码成功`,
         duration: 2,
         key: 'is-form-submitting',
       });
+      // 登出操作
+      await authStore.logout(true);
     })
     .catch(() => {
       message.error({
-        content: `重置密码失败`,
+        content: `修改密码失败`,
         duration: 2,
         key: 'is-form-submitting',
       });

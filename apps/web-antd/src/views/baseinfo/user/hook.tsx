@@ -12,6 +12,7 @@ import { message } from 'ant-design-vue';
 import { useVbenVxeGrid } from '#/adapter/vxe-table';
 import { DepartmentApi, UserApi } from '#/api';
 
+import EditPasswordForm from './edit-password-form.vue';
 import Form from './form.vue';
 import ResetPasswordForm from './reset-password-form.vue';
 
@@ -140,6 +141,10 @@ export const useHook = () => {
     connectedComponent: ResetPasswordForm,
   });
 
+  const [EditPasswordFormModal, editPasswordFormModalApi] = useVbenModal({
+    connectedComponent: EditPasswordForm,
+  });
+
   async function openForm(id?: number) {
     const row = id ? await UserApi.findById(id) : { status: 1 };
     formModalApi
@@ -196,6 +201,10 @@ export const useHook = () => {
       .open();
   };
 
+  const handleEditPassword = () => {
+    editPasswordFormModalApi.open();
+  };
+
   onMounted(async () => {
     const departmentRes = await DepartmentApi.findMany();
 
@@ -216,9 +225,11 @@ export const useHook = () => {
     Grid,
     FormModal,
     ResetPasswordFormModal,
+    EditPasswordFormModal,
     handleCreate,
     handleEdit,
     handleDelete,
     handleResetPassword,
+    handleEditPassword,
   };
 };
