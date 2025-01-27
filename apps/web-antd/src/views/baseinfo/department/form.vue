@@ -107,6 +107,7 @@ function onSubmit(values: Record<string, any>) {
     key: 'is-form-submitting',
   });
   const id = modalApi.getData().values.id;
+  values.sort = Number(values.sort);
 
   modalApi.lock();
   DepartmentApi.save({ ...values, id })
