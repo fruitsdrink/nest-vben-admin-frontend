@@ -30,7 +30,7 @@ onMounted(() => {
   <Page auto-content-height>
     <Grid>
       <template #toolbar-tools>
-        <ButtonNew @click="handleCreate" />
+        <ButtonNew @click="handleCreate" :code="['AC_10010']" />
       </template>
 
       <template #status="{ row }">
@@ -50,7 +50,11 @@ onMounted(() => {
       </template>
 
       <template #action="{ row }">
-        <ButtonEdit @click="handleEdit(row.id)" :disabled="!row.canEdit" />
+        <ButtonEdit
+          @click="handleEdit(row.id)"
+          :disabled="!row.canEdit"
+          :code="['AC_100100', 'AC_100110', 'AC_100120', 'AC_100010']"
+        />
 
         <Popconfirm title="确定删除吗?" @confirm="handleDelete(row.id)">
           <ButtonDelete :disabled="!row.canDelete" />
