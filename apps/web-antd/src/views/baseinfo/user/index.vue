@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { onMounted } from 'vue';
+
 import { Page } from '@vben/common-ui';
 
 import { Popconfirm, Tag } from 'ant-design-vue';
@@ -8,8 +10,20 @@ import { ButtonDelete, ButtonEdit, ButtonNew } from '#/components/buttons';
 
 import { useHook } from './hook';
 
-const { Grid, FormModal, ResetPasswordFormModal, handleCreate, handleEdit, handleDelete, handleResetPassword } =
-  useHook();
+const {
+  Grid,
+  FormModal,
+  ResetPasswordFormModal,
+  handleCreate,
+  handleEdit,
+  handleDelete,
+  handleResetPassword,
+  handleOnMounted,
+} = useHook();
+
+onMounted(() => {
+  handleOnMounted();
+});
 </script>
 
 <template>

@@ -3,8 +3,6 @@ import type { RowType } from './types';
 import type { VbenFormProps } from '#/adapter/form';
 import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 
-import { onMounted } from 'vue';
-
 import { useVbenModal } from '@vben/common-ui';
 
 import { message } from 'ant-design-vue';
@@ -205,7 +203,7 @@ export const useHook = () => {
     editPasswordFormModalApi.open();
   };
 
-  onMounted(async () => {
+  const handleOnMounted = async () => {
     const departmentRes = await DepartmentApi.findMany();
 
     gridApi.formApi.updateSchema([
@@ -219,7 +217,7 @@ export const useHook = () => {
         },
       },
     ]);
-  });
+  };
 
   return {
     Grid,
@@ -231,5 +229,6 @@ export const useHook = () => {
     handleDelete,
     handleResetPassword,
     handleEditPassword,
+    handleOnMounted,
   };
 };
