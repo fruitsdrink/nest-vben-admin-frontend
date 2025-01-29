@@ -46,6 +46,13 @@ export const useHook = () => {
           default: 'actions',
         },
       },
+      {
+        title: '',
+        slots: {
+          default: 'buttons',
+        },
+        width: 140,
+      },
     ],
     data: modules,
     border: true,
@@ -110,6 +117,14 @@ export const useHook = () => {
     values.value = {};
   };
 
+  const handleRowSelectAll = (row: RowType) => {
+    values.value[row.id] = row.actions.map((action) => action.value);
+  };
+
+  const handleRowSelectNone = (row: RowType) => {
+    values.value[row.id] = [];
+  };
+
   return {
     values,
     isPending,
@@ -120,5 +135,7 @@ export const useHook = () => {
     unmount,
     handleSelectAll,
     handleSelectNone,
+    handleRowSelectAll,
+    handleRowSelectNone,
   };
 };
