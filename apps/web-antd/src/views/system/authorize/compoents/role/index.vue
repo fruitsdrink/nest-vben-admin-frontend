@@ -1,15 +1,9 @@
 <script setup lang="ts">
-import type { RoleApi } from '#/api';
-
 import { Alert, Card, Spin } from 'ant-design-vue';
 
 import { useHook } from './hook';
 
-defineEmits<{
-  (e: 'click', role: RoleApi.RoleDto): void;
-}>();
-
-const { isPending, isError, data, currentId, handleClick } = useHook();
+const { isPending, isError, data, role, handleClick } = useHook();
 </script>
 
 <template>
@@ -19,11 +13,10 @@ const { isPending, isError, data, currentId, handleClick } = useHook();
         v-for="item in data"
         :key="item.id"
         class="item cursor-pointer"
-        :class="{ 'text-primary': item.id === currentId }"
+        :class="{ 'text-primary': item.id === role?.id }"
         @click="
           () => {
             handleClick(item);
-            $emit('click', item);
           }
         "
       >

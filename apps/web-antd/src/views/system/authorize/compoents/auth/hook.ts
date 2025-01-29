@@ -5,7 +5,9 @@ import { ref } from 'vue';
 import { useVbenVxeGrid } from '@vben/plugins/vxe-table';
 
 import { useQuery } from '@tanstack/vue-query';
+import { Effect, useStore } from '@tanstack/vue-store';
 
+import { store } from '../../store';
 import { modules } from './mock';
 
 export type RowType = {
@@ -18,8 +20,6 @@ export type RowType = {
 };
 
 export const useHook = () => {
-  const currentRole = ref<null | { id: number; name: string }>(null);
-
   const values = ref<{
     [key: string]: string[];
   }>({});
@@ -60,6 +60,24 @@ export const useHook = () => {
     gridOptions,
   });
 
+  const effect = new Effect({
+    fn: () => {
+      const role = useStore(store, (state) => state.role);
+      if (role.value) {
+        gridApi.setState({
+          tableTitle: `${role.value.name} - 权限列表`,
+        });
+      } else {
+        gridApi.setState({
+          tableTitle: '权限列表',
+        });
+      }
+    },
+    deps: [store],
+    eager: true,
+  });
+  const unmount = effect.mount();
+
   const handleSelectAll = () => {
     const newValues: {
       [key: string]: string[];
@@ -75,5 +93,15 @@ export const useHook = () => {
     values.value = {};
   };
 
-  return { currentRole, values, isPending, isError, data, error, Grid, gridApi, handleSelectAll, handleSelectNone };
+  return {
+    values,
+    isPending,
+    isError,
+    data,
+    error,
+    Grid,
+    unmount,
+    handleSelectAll,
+    handleSelectNone,
+  };
 };

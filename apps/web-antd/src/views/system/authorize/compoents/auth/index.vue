@@ -1,7 +1,5 @@
 <script setup lang="ts">
-import type { RoleApi } from '#/api';
-
-import { h, onMounted, watch } from 'vue';
+import { h, onUnmounted } from 'vue';
 
 import { FluentSelectAll, FluentSelectNone, MdiContentSave } from '@vben/icons';
 
@@ -9,28 +7,11 @@ import { Button, CheckboxGroup } from 'ant-design-vue';
 
 import { useHook } from './hook';
 
-const { role } = defineProps<{
-  role: null | RoleApi.RoleDto;
-}>();
+const { unmount, values, Grid, handleSelectAll, handleSelectNone } = useHook();
 
-const { currentRole, values, Grid, gridApi, handleSelectAll, handleSelectNone } = useHook();
-
-onMounted(() => {
-  currentRole.value = role || null;
-  gridApi.setState({
-    tableTitle: role ? `${role.name} - 权限列表` : '权限列表',
-  });
+onUnmounted(() => {
+  unmount();
 });
-
-watch(
-  () => role,
-  (value) => {
-    currentRole.value = value || null;
-    gridApi.setState({
-      tableTitle: value ? `${value.name} - 权限列表` : '权限列表',
-    });
-  },
-);
 </script>
 
 <template>

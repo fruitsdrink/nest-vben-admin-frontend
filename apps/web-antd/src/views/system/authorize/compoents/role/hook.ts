@@ -1,12 +1,11 @@
-import { ref } from 'vue';
-
 import { useQuery } from '@tanstack/vue-query';
+import { useStore } from '@tanstack/vue-store';
 
 import { RoleApi } from '#/api';
 
-export const useHook = () => {
-  const currentId = ref(0);
+import { store, updateRole } from '../../store';
 
+export const useHook = () => {
   const { isPending, isError, data, error } = useQuery({
     queryKey: ['role-find-many'],
     queryFn: async () => {
@@ -14,16 +13,18 @@ export const useHook = () => {
     },
   });
 
-  const handleClick = (row: { id: number }) => {
-    currentId.value = row.id;
+  const handleClick = (row: RoleApi.RoleDto) => {
+    updateRole({ ...row });
   };
+
+  const role = useStore(store, (state) => state.role);
 
   return {
     isPending,
     isError,
     data,
     error,
-    currentId,
+    role,
     handleClick,
   };
 };

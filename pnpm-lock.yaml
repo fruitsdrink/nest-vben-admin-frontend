@@ -635,6 +635,9 @@ importers:
       '@tanstack/vue-query':
         specifier: 'catalog:'
         version: 5.62.16(vue@3.5.13(typescript@5.7.3))
+      '@tanstack/vue-store':
+        specifier: 'catalog:'
+        version: 0.7.0(vue@3.5.13(typescript@5.7.3))
       '@vben/access':
         specifier: workspace:*
         version: link:../../packages/effects/access
