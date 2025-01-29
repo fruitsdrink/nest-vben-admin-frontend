@@ -24,11 +24,21 @@ onUnmounted(() => {
       </div>
     </template>
     <template #actions="{ row }">
-      <div class="flex flex-row justify-start">
-        <CheckboxGroup :options="row.actions" v-model:value="values[row.id]" />
+      <div class="cell flex flex-row items-center justify-start">
+        <CheckboxGroup :options="row.actions" v-model:value="values[row.id]" class="cell" />
+        <Button size="small" type="link">全选</Button>
+        <Button size="small" type="link">清空</Button>
       </div>
     </template>
   </Grid>
 </template>
 
-<style scoped></style>
+<style scoped>
+:deep(.ant-checkbox-group-item) {
+  font-size: 13px;
+}
+
+:deep(.cell button) {
+  font-size: 13px;
+}
+</style>

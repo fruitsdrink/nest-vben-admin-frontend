@@ -37,6 +37,7 @@ export const useHook = () => {
         title: '模块名称',
         field: 'moduleName',
         width: 200,
+        resizable: true,
       },
       {
         title: '操作',
@@ -52,6 +53,15 @@ export const useHook = () => {
     height: 'auto',
     pagerConfig: {
       enabled: false,
+    },
+    rowConfig: {
+      resizable: true,
+    },
+    columnConfig: {
+      resizable: true,
+    },
+    resizableConfig: {
+      isDblclickAutoWidth: true,
     },
   };
 
