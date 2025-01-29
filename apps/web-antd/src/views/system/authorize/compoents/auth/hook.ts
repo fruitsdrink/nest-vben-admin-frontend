@@ -63,13 +63,20 @@ export const useHook = () => {
   const effect = new Effect({
     fn: () => {
       const role = useStore(store, (state) => state.role);
+
       if (role.value) {
         gridApi.setState({
           tableTitle: `${role.value.name} - 权限列表`,
         });
+        gridApi.setGridOptions({
+          data: modules,
+        });
       } else {
         gridApi.setState({
           tableTitle: '权限列表',
+        });
+        gridApi.setGridOptions({
+          data: [],
         });
       }
     },
