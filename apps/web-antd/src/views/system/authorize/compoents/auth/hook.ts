@@ -96,6 +96,8 @@ export const useHook = () => {
           data: [],
         });
       }
+
+      values.value = {};
     },
     deps: [store],
     eager: true,
