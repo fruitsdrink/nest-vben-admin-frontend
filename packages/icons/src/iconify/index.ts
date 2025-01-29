@@ -14,4 +14,10 @@ export const MdiQqchat = createIconifyIcon('mdi:qqchat');
 
 export const MdiPlus = createIconifyIcon('mdi:plus');
 
+export const MdiContentSave = createIconifyIcon('mdi:content-save');
+
 export const ChangePassword = createIconifyIcon('mdi:key-change');
+
+export const FluentSelectAll = createIconifyIcon('fluent:select-all-on-16-filled');
+
+export const FluentSelectNone = createIconifyIcon('fluent:select-all-off-16-regular');
