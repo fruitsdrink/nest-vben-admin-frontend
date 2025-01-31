@@ -1,14 +1,17 @@
 import type { VxeTableGridOptions } from '@vben/plugins/vxe-table';
 
-import { ref } from 'vue';
+import type { Module } from '../../type';
+
+import { onMounted, ref } from 'vue';
 
 import { useVbenVxeGrid } from '@vben/plugins/vxe-table';
 
-import { useQuery } from '@tanstack/vue-query';
+import { useQuery, useQueryClient } from '@tanstack/vue-query';
 import { Effect, useStore } from '@tanstack/vue-store';
 
+import { AuthorizeApi } from '#/api';
+
 import { store } from '../../store';
-import { modules } from './mock';
 
 export type RowType = {
   actions: {
@@ -24,10 +27,13 @@ export const useHook = () => {
     [key: string]: string[];
   }>({});
 
-  const { isPending, isError, data, error } = useQuery({
+  const queryClient = useQueryClient();
+  const { isPending, isError, data, error } = useQuery<Module[]>({
     queryKey: ['auth-list'],
-    queryFn: () => {
-      return modules;
+    queryFn: async () => {
+      const res = await AuthorizeApi.findAll();
+
+      return res;
     },
   });
 
@@ -35,7 +41,7 @@ export const useHook = () => {
     columns: [
       {
         title: '模块名称',
-        field: 'moduleName',
+        field: 'title',
         width: 200,
         resizable: true,
       },
@@ -54,7 +60,7 @@ export const useHook = () => {
         width: 140,
       },
     ],
-    data: modules,
+    data: [],
     border: true,
     stripe: true,
     height: 'auto',
@@ -77,18 +83,24 @@ export const useHook = () => {
     gridOptions,
   });
 
+  onMounted(() => {});
+
   const effect = new Effect({
     fn: () => {
       const role = useStore(store, (state) => state.role);
-
       if (role.value) {
         gridApi.setState({
           tableTitle: `${role.value.name} - 权限列表`,
         });
         gridApi.setGridOptions({
-          data: modules,
+          data: data && data.value ? data.value : [],
         });
       } else {
+        queryClient.invalidateQueries({
+          queryKey: ['auth-list'],
+          exact: true,
+          refetchType: 'all',
+        });
         gridApi.setState({
           tableTitle: '权限列表',
         });

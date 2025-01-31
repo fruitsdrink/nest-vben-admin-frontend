@@ -34,7 +34,7 @@ async function bootstrap(namespace: string) {
   // 国际化 i18n 配置
   await setupI18n(app);
 
-  // 配置 pinia-tore
+  // 配置 pinia-store
   await initStores(app, { namespace });
 
   // 安装权限指令
