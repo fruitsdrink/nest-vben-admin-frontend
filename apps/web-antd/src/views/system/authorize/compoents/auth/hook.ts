@@ -1,8 +1,10 @@
+import type { CheckboxValueType } from 'ant-design-vue/es/checkbox/interface';
+
 import type { VxeTableGridOptions } from '@vben/plugins/vxe-table';
 
 import type { Module } from '../../type';
 
-import { onMounted, ref } from 'vue';
+import { onMounted } from 'vue';
 
 import { useVbenVxeGrid } from '@vben/plugins/vxe-table';
 
@@ -11,23 +13,22 @@ import { Effect, useStore } from '@tanstack/vue-store';
 
 import { AuthorizeApi } from '#/api';
 
-import { store } from '../../store';
+import { clearActions, selectAllActions, store, updateActionsByModuleId } from '../../store';
 
 export type RowType = {
   actions: {
     label: string;
     value: string;
   }[];
-  id: number;
+  id: string;
   moduleName: string;
 };
 
 export const useHook = () => {
-  const values = ref<{
-    [key: string]: string[];
-  }>({});
-
   const queryClient = useQueryClient();
+
+  const actions = useStore(store, (state) => state.actions);
+
   const { isPending, isError, data, error } = useQuery<Module[]>({
     queryKey: ['auth-list'],
     queryFn: async () => {
@@ -107,9 +108,8 @@ export const useHook = () => {
         gridApi.setGridOptions({
           data: [],
         });
+        clearActions();
       }
-
-      values.value = {};
     },
     deps: [store],
     eager: true,
@@ -124,23 +124,30 @@ export const useHook = () => {
       newValues[item.id] = item.actions.map((action) => action.value);
     });
 
-    values.value = newValues;
+    selectAllActions(newValues);
   };
 
   const handleSelectNone = () => {
-    values.value = {};
+    clearActions();
   };
 
   const handleRowSelectAll = (row: RowType) => {
-    values.value[row.id] = row.actions.map((action) => action.value);
+    updateActionsByModuleId(
+      row.id,
+      row.actions.map((action) => action.value),
+    );
   };
 
   const handleRowSelectNone = (row: RowType) => {
-    values.value[row.id] = [];
+    updateActionsByModuleId(row.id, []);
+  };
+
+  const handleActionsChange = (moduleId: string, checkedValue: CheckboxValueType[]) => {
+    updateActionsByModuleId(moduleId, checkedValue as string[]);
   };
 
   return {
-    values,
+    actions,
     isPending,
     isError,
     data,
@@ -151,5 +158,6 @@ export const useHook = () => {
     handleSelectNone,
     handleRowSelectAll,
     handleRowSelectNone,
+    handleActionsChange,
   };
 };

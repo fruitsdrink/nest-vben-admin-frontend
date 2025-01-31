@@ -7,7 +7,16 @@ import { Button, CheckboxGroup } from 'ant-design-vue';
 
 import { useHook } from './hook';
 
-const { unmount, values, Grid, handleSelectAll, handleSelectNone, handleRowSelectAll, handleRowSelectNone } = useHook();
+const {
+  unmount,
+  actions,
+  Grid,
+  handleSelectAll,
+  handleSelectNone,
+  handleRowSelectAll,
+  handleRowSelectNone,
+  handleActionsChange,
+} = useHook();
 
 onUnmounted(() => {
   unmount();
@@ -25,7 +34,16 @@ onUnmounted(() => {
     </template>
     <template #actions="{ row }">
       <div class="flex flex-row items-center justify-start">
-        <CheckboxGroup :options="row.actions" v-model:value="values[row.id]" class="cell" />
+        <CheckboxGroup
+          :options="row.actions"
+          :value="actions?.[row.id]"
+          class="cell"
+          @change="
+            (checkedValue) => {
+              handleActionsChange(row.id, checkedValue);
+            }
+          "
+        />
       </div>
     </template>
     <template #buttons="{ row }">
@@ -53,6 +71,9 @@ onUnmounted(() => {
       </Button>
     </template>
   </Grid>
+  <div>
+    <pre>{{ actions }}</pre>
+  </div>
 </template>
 
 <style scoped>
