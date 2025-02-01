@@ -1,21 +1,8 @@
-import type {
-  AccessModeType,
-  GenerateMenuAndRoutesOptions,
-  RouteRecordRaw,
-} from '@vben/types';
+import type { AccessModeType, GenerateMenuAndRoutesOptions, RouteRecordRaw } from '@vben/types';
 
-import {
-  cloneDeep,
-  generateMenus,
-  generateRoutesByBackend,
-  generateRoutesByFrontend,
-  mapTree,
-} from '@vben/utils';
+import { cloneDeep, generateMenus, generateRoutesByBackend, generateRoutesByFrontend, mapTree } from '@vben/utils';
 
-async function generateAccessible(
-  mode: AccessModeType,
-  options: GenerateMenuAndRoutesOptions,
-) {
+async function generateAccessible(mode: AccessModeType, options: GenerateMenuAndRoutesOptions) {
   const { router } = options;
 
   options.routes = cloneDeep(options.routes);
@@ -27,6 +14,7 @@ async function generateAccessible(
   // 动态添加到router实例内
   accessibleRoutes.forEach((route) => {
     if (root && !route.meta?.noBasicLayout) {
+      root.name = 'Root';
       // 为了兼容之前的版本用法，如果包含子路由，则将component移除，以免出现多层BasicLayout
       // 如果你的项目已经跟进了本次修改，移除了所有自定义菜单首级的BasicLayout，可以将这段if代码删除
       if (route.children && route.children.length > 0) {
@@ -56,10 +44,7 @@ async function generateAccessible(
  * @param mode
  * @param options
  */
-async function generateRoutes(
-  mode: AccessModeType,
-  options: GenerateMenuAndRoutesOptions,
-) {
+async function generateRoutes(mode: AccessModeType, options: GenerateMenuAndRoutesOptions) {
   const { forbiddenComponent, roles, routes } = options;
 
   let resultRoutes: RouteRecordRaw[] = routes;
@@ -69,11 +54,7 @@ async function generateRoutes(
       break;
     }
     case 'frontend': {
-      resultRoutes = await generateRoutesByFrontend(
-        routes,
-        roles || [],
-        forbiddenComponent,
-      );
+      resultRoutes = await generateRoutesByFrontend(routes, roles || [], forbiddenComponent);
       break;
     }
   }

@@ -14,7 +14,7 @@ const { Grid, FormModal, handleCreate, handleEdit, handleDelete } = useHook();
   <Page auto-content-height>
     <Grid>
       <template #toolbar-tools>
-        <ButtonNew @click="handleCreate" />
+        <ButtonNew @click="handleCreate" :code="['baseinfo_role_add']" />
       </template>
 
       <template #status="{ row }">
@@ -22,9 +22,9 @@ const { Grid, FormModal, handleCreate, handleEdit, handleDelete } = useHook();
       </template>
 
       <template #action="{ row }">
-        <ButtonEdit @click="handleEdit(row.id)" :disabled="!row.canEdit" />
+        <ButtonEdit @click="handleEdit(row.id)" :disabled="!row.canEdit" :code="['baseinfo_role_edit']" />
         <Popconfirm title="确定删除吗?" @confirm="handleDelete(row.id)">
-          <ButtonDelete :disabled="!row.canDelete" />
+          <ButtonDelete :disabled="!row.canDelete" :code="['baseinfo_role_delete']" />
         </Popconfirm>
       </template>
     </Grid>

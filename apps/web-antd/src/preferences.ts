@@ -10,7 +10,7 @@ export const overridesPreferences = defineOverridesPreferences({
   app: {
     name: import.meta.env.VITE_APP_TITLE,
     enableRefreshToken: true, // 是否开启刷新token
-    accessMode: 'frontend',
+    accessMode: 'backend', // 访问模式,
   },
   widget: {
     globalSearch: false,

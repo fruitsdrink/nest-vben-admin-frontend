@@ -30,7 +30,7 @@ onMounted(() => {
   <Page auto-content-height>
     <Grid>
       <template #toolbar-tools>
-        <ButtonNew @click="handleCreate" :code="['AC_10010']" />
+        <ButtonNew @click="handleCreate" :code="['baseinfo_user_add']" />
       </template>
 
       <template #status="{ row }">
@@ -50,18 +50,14 @@ onMounted(() => {
       </template>
 
       <template #action="{ row }">
-        <ButtonEdit
-          @click="handleEdit(row.id)"
-          :disabled="!row.canEdit"
-          :code="['AC_100100', 'AC_100110', 'AC_100120', 'AC_100010']"
-        />
+        <ButtonEdit @click="handleEdit(row.id)" :disabled="!row.canEdit" :code="['baseinfo_user_edit']" />
 
         <Popconfirm title="确定删除吗?" @confirm="handleDelete(row.id)">
-          <ButtonDelete :disabled="!row.canDelete" />
+          <ButtonDelete :disabled="!row.canDelete" :code="['baseinfo_user_delete']" />
         </Popconfirm>
 
         <Popconfirm title="确定重置密码吗?" @confirm="handleResetPassword(row.id, row.username)">
-          <ButtonDelete title="重置密码" />
+          <ButtonDelete title="重置密码" :code="['baseinfo_user_resetPassword']" />
         </Popconfirm>
       </template>
     </Grid>
