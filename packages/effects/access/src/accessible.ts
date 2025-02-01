@@ -14,7 +14,6 @@ async function generateAccessible(mode: AccessModeType, options: GenerateMenuAnd
   // 动态添加到router实例内
   accessibleRoutes.forEach((route) => {
     if (root && !route.meta?.noBasicLayout) {
-      root.name = 'Root';
       // 为了兼容之前的版本用法，如果包含子路由，则将component移除，以免出现多层BasicLayout
       // 如果你的项目已经跟进了本次修改，移除了所有自定义菜单首级的BasicLayout，可以将这段if代码删除
       if (route.children && route.children.length > 0) {
