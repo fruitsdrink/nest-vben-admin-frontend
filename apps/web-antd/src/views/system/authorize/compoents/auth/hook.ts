@@ -4,12 +4,13 @@ import type { VxeTableGridOptions } from '@vben/plugins/vxe-table';
 
 import type { Module } from '../../type';
 
-import { onMounted } from 'vue';
+import { onMounted, toRaw } from 'vue';
 
 import { useVbenVxeGrid } from '@vben/plugins/vxe-table';
 
-import { useQuery, useQueryClient } from '@tanstack/vue-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/vue-query';
 import { Effect, useStore } from '@tanstack/vue-store';
+import { message } from 'ant-design-vue';
 
 import { AuthorizeApi } from '#/api';
 
@@ -28,6 +29,8 @@ export const useHook = () => {
   const queryClient = useQueryClient();
 
   const actions = useStore(store, (state) => state.actions);
+
+  const role = useStore(store, (state) => state.role);
 
   const { isPending, isError, data, error } = useQuery<Module[]>({
     queryKey: ['auth-list'],
@@ -88,7 +91,6 @@ export const useHook = () => {
 
   const effect = new Effect({
     fn: () => {
-      const role = useStore(store, (state) => state.role);
       if (role.value) {
         gridApi.setState({
           tableTitle: `${role.value.name} - 权限列表`,
@@ -108,7 +110,6 @@ export const useHook = () => {
         gridApi.setGridOptions({
           data: [],
         });
-        clearActions();
       }
     },
     deps: [store],
@@ -146,18 +147,69 @@ export const useHook = () => {
     updateActionsByModuleId(moduleId, checkedValue as string[]);
   };
 
+  const mutation = useMutation({
+    mutationFn: async () => {
+      if (role.value && role.value.id) {
+        const { id: roleId } = role.value;
+        const modules =
+          data.value?.map((item) => {
+            return {
+              moduleId: item.id,
+              actions: actions.value ? toRaw(actions.value[item.id]) : [],
+            };
+          }) ?? [];
+
+        const dto = {
+          roleId,
+          modules,
+        };
+
+        message.loading({
+          content: '正在提交中...',
+          duration: 0,
+          key: 'role-permissio-loading',
+        });
+        AuthorizeApi.save(dto);
+      }
+    },
+    onSuccess: () => {
+      message.destroy('role-permissio-loading');
+      message.success({
+        content: '保存成功',
+        key: 'role-permission-save',
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['auth-list'],
+      });
+    },
+    onError: (e) => {
+      message.destroy('role-permissio-loading');
+      message.error({
+        content: e.message,
+        key: 'role-permission-save',
+      });
+    },
+  });
+
+  const handleSave = async () => {
+    mutation.mutate();
+  };
+
   return {
+    role,
     actions,
     isPending,
     isError,
     data,
     error,
     Grid,
+    mutation,
     unmount,
     handleSelectAll,
     handleSelectNone,
     handleRowSelectAll,
     handleRowSelectNone,
     handleActionsChange,
+    handleSave,
   };
 };

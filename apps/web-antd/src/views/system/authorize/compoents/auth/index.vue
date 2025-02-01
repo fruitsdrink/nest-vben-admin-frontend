@@ -8,14 +8,17 @@ import { Button, CheckboxGroup } from 'ant-design-vue';
 import { useHook } from './hook';
 
 const {
+  role,
   unmount,
   actions,
   Grid,
+  mutation,
   handleSelectAll,
   handleSelectNone,
   handleRowSelectAll,
   handleRowSelectNone,
   handleActionsChange,
+  handleSave,
 } = useHook();
 
 onUnmounted(() => {
@@ -29,7 +32,15 @@ onUnmounted(() => {
       <div class="flex flex-row gap-2">
         <Button :icon="h(FluentSelectAll)" @click="handleSelectAll">选择全部</Button>
         <Button :icon="h(FluentSelectNone)" @click="handleSelectNone">取消选择</Button>
-        <Button type="primary" :icon="h(MdiContentSave)">保存</Button>
+        <Button
+          v-if="role && role.id"
+          type="primary"
+          :icon="h(MdiContentSave)"
+          :disabled="!mutation.isPending"
+          @click="handleSave"
+        >
+          保存
+        </Button>
       </div>
     </template>
     <template #actions="{ row }">
@@ -71,9 +82,6 @@ onUnmounted(() => {
       </Button>
     </template>
   </Grid>
-  <div>
-    <pre>{{ actions }}</pre>
-  </div>
 </template>
 
 <style scoped>

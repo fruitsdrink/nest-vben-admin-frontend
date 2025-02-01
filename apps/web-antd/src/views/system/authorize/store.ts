@@ -2,11 +2,13 @@ import type { RoleApi } from '#/api';
 
 import { Store } from '@tanstack/vue-store';
 
+import { AuthorizeApi } from '#/api';
+
 type Role = null | RoleApi.RoleDto;
 
-type Actons = null | { [key: string]: string[] };
+type Actions = null | { [key: string]: string[] };
 
-export const store = new Store<{ actions: Actons; role: Role }>({
+export const store = new Store<{ actions: Actions; role: Role }>({
   role: null,
   actions: null,
 });
@@ -14,11 +16,23 @@ export const store = new Store<{ actions: Actons; role: Role }>({
 /**
  * 更新角色
  */
-export function updateRole(role: Role) {
+export async function updateRole(role: Role) {
+  let actions = null;
+  if (role) {
+    const res = await AuthorizeApi.findByRoleId(role.id);
+    if (res.modules) {
+      actions = {};
+      res.modules.forEach((m: any) => {
+        actions[m.moduleId] = m.actions ? [...m.actions] : [];
+      });
+    }
+  }
+
   store.setState((state) => {
     return {
       ...state,
       role: role ? { ...role } : null,
+      actions,
     };
   });
 }
@@ -26,7 +40,7 @@ export function updateRole(role: Role) {
 /**
  * 选择所有actions
  */
-export function selectAllActions(actions: Actons) {
+export function selectAllActions(actions: Actions) {
   store.setState((state) => {
     return {
       ...state,
