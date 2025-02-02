@@ -10,6 +10,8 @@
 
 ### apps/web-antd
 
+- 当前用户是否管理员显示
+
 ### internal/lint-configs
 
 - 修改prettier-config/index.mjs `printWidth: 120`
