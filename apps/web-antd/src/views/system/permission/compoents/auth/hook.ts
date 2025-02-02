@@ -12,7 +12,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/vue-query';
 import { Effect, useStore } from '@tanstack/vue-store';
 import { message } from 'ant-design-vue';
 
-import { AuthorizeApi } from '#/api';
+import { PermissionApi } from '#/api';
 
 import { clearActions, selectAllActions, store, updateActionsByModuleId } from '../../store';
 
@@ -35,7 +35,7 @@ export const useHook = () => {
   const { isPending, isError, data, error } = useQuery<Module[]>({
     queryKey: ['auth-list'],
     queryFn: async () => {
-      const res = await AuthorizeApi.findAll();
+      const res = await PermissionApi.findAll();
 
       return res;
     },
@@ -169,7 +169,7 @@ export const useHook = () => {
           duration: 0,
           key: 'role-permissio-loading',
         });
-        AuthorizeApi.save(dto);
+        PermissionApi.save(dto);
       }
     },
     onSuccess: () => {

@@ -1,6 +1,6 @@
 import { requestClient } from '#/api/request';
 
-export namespace AuthorizeApi {
+export namespace PermissionApi {
   export interface SaveDto {
     roleId: number;
     modules: {
