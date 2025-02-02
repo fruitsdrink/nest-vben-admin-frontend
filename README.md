@@ -8,12 +8,9 @@
 
 ## Vben修改
 
-### apps
+### apps/web-antd
 
-- 增加tyeps目录
-- 增加components目录
-- 增加views/baseinfo目录
-- 增加api/baseinfo目录
+- 顶部导航栏增加主题切换
 
 ### internal/lint-configs
 
