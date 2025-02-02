@@ -15,7 +15,7 @@ export const overridesPreferences = defineOverridesPreferences({
   widget: {
     globalSearch: false,
     languageToggle: false,
-    themeToggle: false,
+    themeToggle: true,
     notification: false,
   },
   shortcutKeys: {
