@@ -28,7 +28,19 @@ export namespace LoginLogApi {
     total: number;
   };
 
+  export type DeleteLoginLogDto = {
+    ids: string[];
+  };
+
   export async function findList(params: FindListParams) {
     return requestClient.get<LoginLogResultDto>('/system/login-log', { params });
+  }
+
+  export async function remove(params: DeleteLoginLogDto) {
+    return requestClient.delete('/system/login-log/delete', { data: params });
+  }
+
+  export async function clear() {
+    return requestClient.delete('/system/login-log/clear');
   }
 }

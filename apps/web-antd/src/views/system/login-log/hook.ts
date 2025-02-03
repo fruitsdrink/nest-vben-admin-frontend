@@ -1,6 +1,8 @@
 import type { VbenFormProps } from '#/adapter/form';
 import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 
+import { message } from 'ant-design-vue';
+
 import { useVbenVxeGrid } from '#/adapter/vxe-table';
 import { LoginLogApi } from '#/api';
 
@@ -108,16 +110,55 @@ export const useHook = () => {
     gridOptions,
   });
 
-  const handleDelete = () => {
-    // const res = gridApi.grid.getCheckboxRecords();
-    // if (res && res.length > 0) {
-    //   const ids = res.map((item) => item.id);
-    //   console.log(ids);
-    // }
+  const handleDelete = async () => {
+    const res = gridApi.grid.getCheckboxRecords();
+    if (res && res.length > 0) {
+      try {
+        const ids = res.map((item) => item.id);
+        message.loading({
+          content: '正在删除...',
+          duration: 0,
+          key: 'is-delete-login',
+        });
+        await LoginLogApi.remove({ ids });
+        gridApi.reload();
+        message.success({
+          content: '删除成功',
+          duration: 2,
+          key: 'is-delete-login',
+        });
+      } catch {
+        message.error({
+          content: '删除失败',
+          duration: 2,
+          key: 'is-delete-login',
+        });
+      }
+    }
   };
 
-  const handleClear = () => {
-    // console.log('clear');
+  const handleClear = async () => {
+    try {
+      message.loading({
+        content: '正在清空...',
+        duration: 0,
+        key: 'is-clear-login',
+      });
+
+      await LoginLogApi.clear();
+      gridApi.reload();
+      message.success({
+        content: '清空成功',
+        duration: 2,
+        key: 'is-clear-login',
+      });
+    } catch {
+      message.error({
+        content: '清空失败',
+        duration: 2,
+        key: 'is-clear-login',
+      });
+    }
   };
   return { Grid, gridApi, handleDelete, handleClear };
 };
