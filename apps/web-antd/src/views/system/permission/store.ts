@@ -2,7 +2,7 @@ import type { RoleApi } from '#/api';
 
 import { Store } from '@tanstack/vue-store';
 
-import { AuthorizeApi } from '#/api';
+import { PermissionApi } from '#/api';
 
 type Role = null | RoleApi.RoleDto;
 
@@ -19,7 +19,7 @@ export const store = new Store<{ actions: Actions; role: Role }>({
 export async function updateRole(role: Role) {
   let actions = null;
   if (role) {
-    const res = await AuthorizeApi.findByRoleId(role.id);
+    const res = await PermissionApi.findByRoleId(role.id);
     if (res.modules) {
       actions = {};
       res.modules.forEach((m: any) => {
