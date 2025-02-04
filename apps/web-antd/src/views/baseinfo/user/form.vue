@@ -9,7 +9,7 @@ import { useVbenForm } from '#/adapter/form';
 import { DepartmentApi, RoleApi, UserApi } from '#/api';
 
 defineOptions({
-  name: 'FormDepartment',
+  name: 'FormUser',
 });
 
 const [Form, formApi] = useVbenForm({

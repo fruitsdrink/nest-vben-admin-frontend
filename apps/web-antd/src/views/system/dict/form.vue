@@ -4,10 +4,10 @@ import { useVbenModal } from '@vben/common-ui';
 import { message } from 'ant-design-vue';
 
 import { useVbenForm } from '#/adapter/form';
-import { RoleApi } from '#/api';
+import { DictTypeApi } from '#/api';
 
 defineOptions({
-  name: 'FormRole',
+  name: 'FormDictType',
 });
 
 const [Form, formApi] = useVbenForm({
@@ -16,23 +16,22 @@ const [Form, formApi] = useVbenForm({
     {
       component: 'Input',
       componentProps: {
-        placeholder: '请输入角色名称',
+        placeholder: '请输入字典名称',
         allowClear: true,
       },
       fieldName: 'name',
-      label: '角色名称',
+      label: '字典名称',
       rules: 'required',
     },
     {
-      component: 'InputNumber',
+      component: 'Input',
       componentProps: {
-        placeholder: '请输入排序编号',
+        placeholder: '请输入字典编码',
+        allowClear: true,
       },
-      fieldName: 'sort',
-      label: '排序编号',
-      controlClass: 'w-full',
+      fieldName: 'code',
+      label: '字典编码',
       rules: 'required',
-      defaultValue: 0,
     },
     {
       component: 'Input',
@@ -72,7 +71,7 @@ const [Modal, modalApi] = useVbenModal({
   },
   onOpenChange(isOpen: boolean) {
     if (isOpen) {
-      const { values } = modalApi.getData<{ values: RoleApi.SaveParams }>();
+      const { values } = modalApi.getData<{ values: DictTypeApi.ItemDto }>();
 
       if (values) {
         formApi.setValues(values);
@@ -88,22 +87,21 @@ function onSubmit(values: Record<string, any>) {
     duration: 0,
     key: 'is-form-submitting',
   });
-  const id = modalApi.getData().values.id;
-  values.sort = Number(values.sort);
+  const id = modalApi.getData().values.id as string;
 
   modalApi.lock();
-  RoleApi.save({ ...values, id })
+  DictTypeApi.save({ ...values, id } as DictTypeApi.SaveDto)
     .then(() => {
       modalApi.close();
       message.success({
-        content: `${id ? '编辑' : '新增'}角色成功`,
+        content: `${id ? '编辑' : '新增'}字典成功`,
         duration: 2,
         key: 'is-form-submitting',
       });
     })
     .catch(() => {
       message.error({
-        content: `${id ? '编辑' : '新增'}角色失败`,
+        content: `${id ? '编辑' : '新增'}字典失败`,
         duration: 2,
         key: 'is-form-submitting',
       });
