@@ -1,19 +1,31 @@
 import type { VbenFormProps } from '#/adapter/form';
 import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 
-import { useRouter } from 'vue-router';
+import { onMounted, ref } from 'vue';
 
 import { useVbenModal } from '@vben/common-ui';
 
 import { message } from 'ant-design-vue';
 
 import { useVbenVxeGrid } from '#/adapter/vxe-table';
-import { DictTypeApi } from '#/api';
+import { DictDataApi, DictTypeApi } from '#/api';
 
 import Form from './form.vue';
 
-export const useHook = () => {
-  const router = useRouter();
+export const useHook = (dictTypeId: null | string) => {
+  const currentDictTypeId = ref(dictTypeId);
+  const dataTypeList = ref<{ label: string; value: string }[]>([]);
+
+  onMounted(async () => {
+    if (dictTypeId) {
+      const res = await DictTypeApi.findMany();
+
+      dataTypeList.value = res.map((item) => ({
+        label: item.name,
+        value: item.id,
+      }));
+    }
+  });
 
   const formOptions: VbenFormProps = {
     // 默认展开
@@ -23,20 +35,22 @@ export const useHook = () => {
       {
         component: 'Input',
         defaultValue: '',
-        fieldName: 'name',
-        label: '字典名称',
+        fieldName: 'keyword',
+        label: '字典标签',
         componentProps: {
           allowClear: true,
         },
       },
       {
-        component: 'Input',
-        defaultValue: '',
-        fieldName: 'code',
-        label: '字典编码',
+        component: 'Select',
         componentProps: {
           allowClear: true,
+          options: dataTypeList,
+          placeholder: '请选择',
         },
+        fieldName: 'dictTypeId',
+        label: '字典类型',
+        defaultValue: currentDictTypeId.value,
       },
       {
         component: 'Select',
@@ -66,11 +80,14 @@ export const useHook = () => {
     submitOnEnter: false,
   };
 
-  const gridOptions: VxeTableGridOptions<DictTypeApi.ItemDto> = {
+  const gridOptions: VxeTableGridOptions<DictDataApi.ItemDto> = {
     columns: [
       { title: '序号', type: 'seq', width: 50 },
-      { field: 'name', title: '字典名称' },
-      { field: 'code', title: '字典编码' },
+      { field: 'label', title: '字典标签' },
+      { field: 'value', title: '字典键值' },
+      { field: 'displayType', title: '回显类型', slots: { default: 'displayType' } },
+      { field: 'dictType.name', title: '字典类型' },
+      { field: 'sort', title: '排序编号' },
       { field: 'status', title: '有效状态', slots: { default: 'status' } },
       { title: '操作', width: 240, slots: { default: 'action' } },
     ],
@@ -88,12 +105,13 @@ export const useHook = () => {
     proxyConfig: {
       ajax: {
         query: async ({ page, sort }, formValues) => {
-          return await DictTypeApi.findList({
+          return await DictDataApi.findList({
             page: page.currentPage,
             pageSize: page.pageSize,
             sortBy: sort.field,
             sortOrder: sort.order,
             ...formValues,
+            dictTypeId: currentDictTypeId.value,
           });
         },
       },
@@ -108,7 +126,7 @@ export const useHook = () => {
   };
 
   const [Grid, gridApi] = useVbenVxeGrid({
-    tableTitle: '字典管理',
+    tableTitle: '字典数据',
     formOptions,
     gridOptions,
   });
@@ -121,14 +139,15 @@ export const useHook = () => {
   });
 
   async function openForm(id?: string) {
-    const row = id ? await DictTypeApi.findById(id) : { status: 1 };
+    const row = id ? await DictDataApi.findById(id) : { status: 1 };
     formModalApi
       .setData({
         // 表单值
         values: { id, ...row },
+        dictTypeId: currentDictTypeId.value,
       })
       .setState({
-        title: `${id ? '编辑' : '新建'}字典`,
+        title: `${id ? '编辑' : '新建'}字典数据`,
       })
       .open();
   }
@@ -147,7 +166,7 @@ export const useHook = () => {
       duration: 0,
       key: 'is-delete-role',
     });
-    DictTypeApi.remove(id)
+    DictDataApi.remove(id)
       .then(() => {
         gridApi.reload();
         message.success({
@@ -165,14 +184,5 @@ export const useHook = () => {
       });
   };
 
-  const handleOpenDictData = (id: string) => {
-    router.push({
-      path: '/system/dict-data',
-      query: {
-        id,
-      },
-    });
-  };
-
-  return { Grid, FormModal, handleCreate, handleEdit, handleDelete, handleOpenDictData };
+  return { Grid, FormModal, handleCreate, handleEdit, handleDelete };
 };
