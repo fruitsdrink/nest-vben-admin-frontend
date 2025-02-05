@@ -2,10 +2,11 @@
 import type { NotificationItem } from '@vben/layouts';
 
 import { computed, ref, watch } from 'vue';
+import { useRouter } from 'vue-router';
 
 import { AuthenticationLoginExpiredModal } from '@vben/common-ui';
 import { useWatermark } from '@vben/hooks';
-import { ChangePassword } from '@vben/icons';
+import { ChangePassword, GgProfile } from '@vben/icons';
 import { BasicLayout, LockScreen, Notification, UserDropdown } from '@vben/layouts';
 import { preferences } from '@vben/preferences';
 import { useAccessStore, useUserStore } from '@vben/stores';
@@ -50,10 +51,18 @@ const authStore = useAuthStore();
 const accessStore = useAccessStore();
 const { destroyWatermark, updateWatermark } = useWatermark();
 const showDot = computed(() => notifications.value.some((item) => !item.isRead));
+const router = useRouter();
 
 const { EditPasswordFormModal, handleEditPassword } = useHook();
 
 const menus = computed(() => [
+  {
+    handler: () => {
+      handleProfile();
+    },
+    icon: GgProfile,
+    text: '个人中心',
+  },
   {
     handler: () => {
       handleEditPassword();
@@ -103,6 +112,10 @@ function handleNoticeClear() {
 
 function handleMakeAll() {
   notifications.value.forEach((item) => (item.isRead = true));
+}
+
+function handleProfile() {
+  router.push('/user/profile');
 }
 watch(
   () => preferences.app.watermark,
