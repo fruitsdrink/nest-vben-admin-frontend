@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { defineEmits } from 'vue';
-
 import {
   CarbonUserRole,
   IsiconTreeFilled,
@@ -30,8 +28,8 @@ const { data } = useQuery<UserApi.Profile>({
   },
 });
 
-const onAvatarClick = () => {
-  emit('click');
+const onAvatarClick = (data: undefined | UserApi.Profile) => {
+  emit('click', data);
 };
 </script>
 
@@ -40,7 +38,14 @@ const onAvatarClick = () => {
     <div class="flex w-full flex-row items-center justify-center py-4">
       <div class="avatar-container h-[120px] w-[120px] cursor-pointer overflow-hidden rounded-full">
         <Image :preview="false" :src="data?.avatar" class="h-full w-full" />
-        <div class="mask" @click="onAvatarClick">
+        <div
+          class="mask"
+          @click="
+            () => {
+              onAvatarClick(data);
+            }
+          "
+        >
           <MdiPlusThick width="24" height="24" />
         </div>
       </div>

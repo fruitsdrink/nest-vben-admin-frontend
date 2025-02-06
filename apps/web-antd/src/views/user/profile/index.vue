@@ -3,14 +3,25 @@ import { Page, useVbenModal } from '@vben/common-ui';
 
 import { Card } from 'ant-design-vue';
 
+import { UserApi } from '#/api';
+
 import { EditAvatar, Profile } from './components';
 
-const [FormModal, formModalApi] = useVbenModal({
+defineOptions({
+  name: 'Profile',
+});
+const [AvatarModal, avatarModalApi] = useVbenModal({
   connectedComponent: EditAvatar,
 });
 
-const handleOnEditAvatar = () => {
-  formModalApi.open();
+const handleOnEditAvatar = (data: UserApi.Profile) => {
+  avatarModalApi
+    .setData({
+      values: {
+        ...data,
+      },
+    })
+    .open();
 };
 </script>
 
@@ -22,6 +33,6 @@ const handleOnEditAvatar = () => {
         <Card title="基本资料">form</Card>
       </div>
     </Page>
-    <FormModal />
+    <AvatarModal />
   </div>
 </template>
