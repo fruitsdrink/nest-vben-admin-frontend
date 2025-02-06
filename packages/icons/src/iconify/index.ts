@@ -35,3 +35,7 @@ export const CarbonUserRole = createIconifyIcon('carbon:user-role');
 export const MdiAdministrator = createIconifyIcon('mdi:administrator');
 
 export const GgProfile = createIconifyIcon('gg:profile');
+
+export const OpenMojiEuropenNameBadge = createIconifyIcon('openmoji:european-name-badge');
+
+export const MdiPlusThick = createIconifyIcon('mdi:plus-thick');

@@ -34,6 +34,22 @@ export namespace UserApi {
     status?: '0' | '1';
   };
 
+  export type Profile = {
+    avatar: string;
+    department?: { id: number; name: string };
+    email?: string;
+    id: number;
+    isAdmin: boolean;
+    phone?: string;
+    realName?: string;
+    roles: { id: number; name: string }[];
+    username: string;
+  };
+
+  export async function profile() {
+    return requestClient.get<Profile>('/user/profile');
+  }
+
   /**
    * 新增/编辑用户
    */

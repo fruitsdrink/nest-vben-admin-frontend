@@ -1,49 +1,84 @@
 <script setup lang="ts">
-import { CarbonUserRole, IsiconTreeFilled, MdiAccount, MdiAdministrator, MdiEmail, MdiMobilePhone } from '@vben/icons';
+import { defineEmits } from 'vue';
 
+import {
+  CarbonUserRole,
+  IsiconTreeFilled,
+  MdiAccount,
+  MdiAdministrator,
+  MdiEmail,
+  MdiMobilePhone,
+  MdiPlusThick,
+  OpenMojiEuropenNameBadge,
+} from '@vben/icons';
+
+import { useQuery } from '@tanstack/vue-query';
 import { Card, Checkbox, Image } from 'ant-design-vue';
+
+import { UserApi } from '#/api';
 
 defineOptions({
   name: 'Profile',
 });
+
+const emit = defineEmits(['click']);
+
+const { data } = useQuery<UserApi.Profile>({
+  queryKey: ['profile'],
+  queryFn: async () => {
+    return await UserApi.profile();
+  },
+});
+
+const onAvatarClick = () => {
+  emit('click');
+};
 </script>
 
 <template>
   <Card title="个人信息" class="profile">
     <div class="flex w-full flex-row items-center justify-center py-4">
-      <Image
-        :width="120"
-        src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
-        class="rounded-full"
-      />
+      <div class="avatar-container h-[120px] w-[120px] cursor-pointer overflow-hidden rounded-full">
+        <Image :preview="false" :src="data?.avatar" class="h-full w-full" />
+        <div class="mask" @click="onAvatarClick">
+          <MdiPlusThick width="24" height="24" />
+        </div>
+      </div>
     </div>
     <div class="item">
       <div class="label">
         <MdiAccount />
         <span>用户名称</span>
       </div>
-      <div class="value">admin</div>
+      <div class="value">{{ data?.username }}</div>
+    </div>
+    <div class="item">
+      <div class="label">
+        <OpenMojiEuropenNameBadge />
+        <span>用户姓名</span>
+      </div>
+      <div class="value">{{ data?.realName }}</div>
     </div>
     <div class="item">
       <div class="label">
         <MdiMobilePhone />
         <span>电话号码</span>
       </div>
-      <div class="value">13911111111</div>
+      <div class="value">{{ data?.phone }}</div>
     </div>
     <div class="item">
       <div class="label">
         <MdiEmail />
         <span>用户邮箱</span>
       </div>
-      <div class="value">test@test.com</div>
+      <div class="value">{{ data?.email }}</div>
     </div>
     <div class="item">
       <div class="label">
         <IsiconTreeFilled />
         <span>所属部门</span>
       </div>
-      <div class="value">研发部门</div>
+      <div class="value">{{ data?.department?.name }}</div>
     </div>
     <div class="item">
       <div class="label">
@@ -51,8 +86,7 @@ defineOptions({
         <span>用户角色</span>
       </div>
       <div class="flex flex-row flex-wrap items-center justify-end gap-2">
-        <span>管理员1</span>
-        <span>管理员2</span>
+        <span v-for="role in data?.roles" :key="role.id">{{ role.name }}</span>
       </div>
     </div>
     <div class="item">
@@ -61,7 +95,7 @@ defineOptions({
         <span>是否管理员</span>
       </div>
       <div class="value">
-        <Checkbox checked />
+        <Checkbox :checked="data?.isAdmin ? true : false" />
       </div>
     </div>
   </Card>
@@ -69,6 +103,20 @@ defineOptions({
 
 <style lang="scss" scoped>
 .profile {
+  .avatar-container {
+    position: relative;
+
+    &:hover {
+      .mask {
+        @apply flex;
+      }
+    }
+
+    .mask {
+      @apply absolute inset-0 flex hidden select-none flex-row items-center justify-center rounded-full bg-black/60;
+    }
+  }
+
   .item {
     @apply grid grid-cols-[100px_1fr] items-center justify-between gap-3 border-b-[1px] py-3;
 
