@@ -4,12 +4,7 @@ import type { NotificationItem } from './types';
 import { Bell, MailCheck } from '@vben/icons';
 import { $t } from '@vben/locales';
 
-import {
-  VbenButton,
-  VbenIconButton,
-  VbenPopover,
-  VbenScrollbar,
-} from '@vben-core/shadcn-ui';
+import { VbenButton, VbenIconButton, VbenPopover, VbenScrollbar } from '@vben-core/shadcn-ui';
 
 import { useToggle } from '@vueuse/core';
 
@@ -62,17 +57,11 @@ function handleClick(item: NotificationItem) {
 }
 </script>
 <template>
-  <VbenPopover
-    v-model:open="open"
-    content-class="relative right-2 w-[360px] p-0"
-  >
+  <VbenPopover v-model:open="open" content-class="relative right-2 w-[360px] p-0">
     <template #trigger>
       <div class="flex-center mr-2 h-full" @click.stop="toggle()">
         <VbenIconButton class="bell-button text-foreground relative">
-          <span
-            v-if="dot"
-            class="bg-primary absolute right-0.5 top-0.5 h-2 w-2 rounded"
-          ></span>
+          <span v-if="dot" class="bg-primary absolute right-0.5 top-0.5 h-2 w-2 rounded"></span>
           <Bell class="size-4" />
         </VbenIconButton>
       </div>
@@ -96,19 +85,10 @@ function handleClick(item: NotificationItem) {
               class="hover:bg-accent border-border relative flex w-full cursor-pointer items-start gap-5 border-t px-3 py-3"
               @click="handleClick(item)"
             >
-              <span
-                v-if="!item.isRead"
-                class="bg-primary absolute right-2 top-2 h-2 w-2 rounded"
-              ></span>
+              <span v-if="!item.isRead" class="bg-primary absolute right-2 top-2 h-2 w-2 rounded"></span>
 
-              <span
-                class="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full"
-              >
-                <img
-                  :src="item.avatar"
-                  class="aspect-square h-full w-full object-cover"
-                  role="img"
-                />
+              <span class="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full">
+                <img :src="item.avatar" class="aspect-square h-full w-full object-cover" role="img" />
               </span>
               <div class="flex flex-col gap-1 leading-none">
                 <p class="font-semibold">{{ item.title }}</p>
@@ -130,15 +110,8 @@ function handleClick(item: NotificationItem) {
         </div>
       </template>
 
-      <div
-        class="border-border flex items-center justify-between border-t px-4 py-3"
-      >
-        <VbenButton
-          :disabled="notifications.length <= 0"
-          size="sm"
-          variant="ghost"
-          @click="handleClear"
-        >
+      <div class="border-border flex items-center justify-between border-t px-4 py-3">
+        <VbenButton :disabled="notifications.length <= 0" size="sm" variant="ghost" @click="handleClear">
           {{ $t('ui.widgets.clearNotifications') }}
         </VbenButton>
         <VbenButton size="sm" @click="handleViewAll">

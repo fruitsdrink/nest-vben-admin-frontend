@@ -6,7 +6,7 @@ import type { PaginationParams } from '#/types';
 import { requestClient } from '#/api/request';
 
 export namespace UserApi {
-  interface UserDto {
+  export interface UserDto {
     id: number;
     username: string;
     nickName: string;

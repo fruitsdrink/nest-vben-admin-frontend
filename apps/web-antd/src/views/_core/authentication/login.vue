@@ -52,9 +52,7 @@ const formSchema = computed((): VbenFormSchema[] => {
       dependencies: {
         trigger(values, form) {
           if (values.selectAccount) {
-            const findUser = MOCK_USER_OPTIONS.find(
-              (item) => item.value === values.selectAccount,
-            );
+            const findUser = MOCK_USER_OPTIONS.find((item) => item.value === values.selectAccount);
             if (findUser) {
               form.setValues({
                 password: '123456',
@@ -67,8 +65,7 @@ const formSchema = computed((): VbenFormSchema[] => {
       },
       fieldName: 'username',
       label: $t('authentication.username'),
-      defaultValue:
-        import.meta.env.VITE_APP_NODE_ENV === 'development' ? 'admin' : '',
+      defaultValue: import.meta.env.VITE_APP_NODE_ENV === 'development' ? 'admin' : '',
       rules: z.string().min(1, { message: $t('authentication.usernameTip') }),
     },
     {
@@ -78,8 +75,7 @@ const formSchema = computed((): VbenFormSchema[] => {
       },
       fieldName: 'password',
       label: $t('authentication.password'),
-      defaultValue:
-        import.meta.env.VITE_APP_NODE_ENV === 'development' ? 'admin123' : '',
+      defaultValue: import.meta.env.VITE_APP_NODE_ENV === 'development' ? 'admin123' : '',
       rules: z.string().min(1, { message: $t('authentication.passwordTip') }),
     },
     {
@@ -94,9 +90,5 @@ const formSchema = computed((): VbenFormSchema[] => {
 </script>
 
 <template>
-  <AuthenticationLogin
-    :form-schema="formSchema"
-    :loading="authStore.loginLoading"
-    @submit="authStore.authLogin"
-  />
+  <AuthenticationLogin :form-schema="formSchema" :loading="authStore.loginLoading" @submit="authStore.authLogin" />
 </template>
