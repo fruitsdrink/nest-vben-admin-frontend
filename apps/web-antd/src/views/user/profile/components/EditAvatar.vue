@@ -132,7 +132,7 @@ const handleOnClear = async () => {
   <Modal>
     <div class="grid grid-rows-[1fr_auto] place-items-center gap-4 p-4">
       <div class="avatar relative h-[240px] w-[240px] overflow-hidden rounded-full">
-        <img :src="imgBase64 || userInfo?.avatar" class="h-full w-full" />
+        <img :src="imgBase64 || userInfo?.avatar" class="h-full w-full object-cover" alt="avatar" />
         <div class="mask absolute inset-0 z-10 flex items-center justify-center bg-black/60" @click="handleOnClear">
           <MdiPlusThick width="64" height="64" class="rotate-45" />
         </div>
