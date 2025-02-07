@@ -110,4 +110,8 @@ export namespace UserApi {
       headers: { 'Content-Type': 'multipart/form-data' },
     });
   }
+
+  export async function updateProfile(data: Partial<UserDto>) {
+    return requestClient.put<Profile>('/user/profile', data);
+  }
 }

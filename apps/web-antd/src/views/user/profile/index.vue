@@ -1,21 +1,22 @@
 <script setup lang="ts">
 import { Page } from '@vben/common-ui';
 
-import { Card } from 'ant-design-vue';
-
-import { Profile } from './components';
+import { Form, Profile } from './components';
+import { useHook } from './hook';
 
 defineOptions({
   name: 'Profile',
 });
+
+const { data, handleOnUpdate } = useHook();
 </script>
 
 <template>
   <div>
     <Page auto-content-height>
       <div class="grid grid-cols-[352px_1fr] gap-4">
-        <Profile />
-        <Card title="基本资料">form</Card>
+        <Profile :data="data" @update="handleOnUpdate" />
+        <Form :data="data" @update="handleOnUpdate" />
       </div>
     </Page>
   </div>

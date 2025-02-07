@@ -11,11 +11,7 @@ import {
   OpenMojiEuropenNameBadge,
 } from '@vben/icons';
 
-import { useQuery, useQueryClient } from '@tanstack/vue-query';
 import { Card, Checkbox, Image } from 'ant-design-vue';
-
-import { UserApi } from '#/api';
-import { useAuthStore } from '#/store';
 
 import { EditAvatar } from '.';
 
@@ -23,24 +19,23 @@ defineOptions({
   name: 'Profile',
 });
 
-const { data } = useQuery<UserApi.Profile>({
-  queryKey: ['profile'],
-  queryFn: async () => {
-    return await UserApi.profile();
+const { data } = defineProps({
+  data: {
+    type: Object,
+    default: null,
   },
 });
-const queryClient = useQueryClient();
-const { fetchUserInfo } = useAuthStore();
+
+const emits = defineEmits(['update']);
 
 const [AvatarModal, avatarModalApi] = useVbenModal({
   connectedComponent: EditAvatar,
   async onClosed() {
-    queryClient.invalidateQueries({ queryKey: ['profile'] });
-    await fetchUserInfo();
+    emits('update');
   },
 });
 
-const onAvatarClick = (data: undefined | UserApi.Profile) => {
+const onAvatarClick = (data: Object) => {
   avatarModalApi
     .setData({
       values: {
@@ -86,7 +81,7 @@ const onAvatarClick = (data: undefined | UserApi.Profile) => {
       <div class="item">
         <div class="label">
           <MdiMobilePhone />
-          <span>电话号码</span>
+          <span>联系电话</span>
         </div>
         <div class="value">{{ data?.phone }}</div>
       </div>
