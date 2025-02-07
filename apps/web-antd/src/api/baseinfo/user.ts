@@ -104,4 +104,10 @@ export namespace UserApi {
   export async function editPassword(data: { newPassword: string; password: string }) {
     return requestClient.post('/baseinfo/user/edit-password', data);
   }
+
+  export async function uploadAvatar(data: FormData) {
+    return requestClient.post<{ isok: boolean }>('/user/profile/upload-avatar', data, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
+  }
 }
