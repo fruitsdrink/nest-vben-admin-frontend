@@ -1,15 +1,17 @@
 <script lang="ts" setup>
 import type { NotificationItem } from '@vben/layouts';
 
-import { computed, watch } from 'vue';
+import { computed, onMounted, onUnmounted, ref, watch } from 'vue';
 import { useRouter } from 'vue-router';
 
 import { AuthenticationLoginExpiredModal } from '@vben/common-ui';
-import { useWatermark } from '@vben/hooks';
+import { useAppConfig, useWatermark } from '@vben/hooks';
 import { ChangePassword, GgProfile } from '@vben/icons';
 import { BasicLayout, LockScreen, Notification, UserDropdown } from '@vben/layouts';
 import { preferences } from '@vben/preferences';
 import { useAccessStore, useUserStore } from '@vben/stores';
+
+import { io, Socket } from 'socket.io-client';
 
 import { useAuthStore } from '#/store';
 import LoginForm from '#/views/_core/authentication/login.vue';
@@ -61,6 +63,10 @@ const showDot = computed(() =>
   notifications && notifications.value ? notifications.value.some((item: NotificationItem) => !item.isRead) : false,
 );
 const router = useRouter();
+
+const socket = ref<null | Socket>(null);
+
+const { socketUrl } = useAppConfig(import.meta.env, import.meta.env.PROD);
 
 const { EditPasswordFormModal, handleEditPassword } = useHook();
 
@@ -141,6 +147,28 @@ watch(
     immediate: true,
   },
 );
+
+const heartbeat = () => {
+  if (socket.value) {
+    const id = userStore.userInfo?.id;
+    socket.value.emit('online-user', { id });
+  }
+};
+
+let timer: null | ReturnType<typeof setInterval> = null;
+onMounted(() => {
+  socket.value = io(socketUrl);
+  timer = setInterval(heartbeat, 10_000);
+});
+
+onUnmounted(() => {
+  if (socket.value) {
+    socket.value.disconnect();
+  }
+  if (timer) {
+    clearInterval(timer);
+  }
+});
 </script>
 
 <template>

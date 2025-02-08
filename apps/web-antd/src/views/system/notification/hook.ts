@@ -202,9 +202,11 @@ export const useNotification = () => {
   }
 
   // 点击通知
-  async function handleItemClick(item: NotificationItem & { id: string }) {
-    await NotificationApi.markAsRead(item.id);
-    queryClient.invalidateQueries({ queryKey: ['notifications'] });
+  async function handleItemClick(item: NotificationItem) {
+    if ('id' in item && item.id) {
+      await NotificationApi.markAsRead(item.id as string);
+      queryClient.invalidateQueries({ queryKey: ['notifications'] });
+    }
   }
   // 查看全部
   function handleViewAll() {

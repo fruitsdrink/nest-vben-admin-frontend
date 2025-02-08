@@ -12,51 +12,417 @@ catalogs:
     '@changesets/cli':
       specifier: ^2.27.11
       version: 2.27.11
+    '@changesets/git':
+      specifier: ^3.0.2
+      version: 3.0.2
+    '@clack/prompts':
+      specifier: ^0.9.1
+      version: 0.9.1
+    '@commitlint/cli':
+      specifier: ^19.6.1
+      version: 19.6.1
+    '@commitlint/config-conventional':
+      specifier: ^19.6.0
+      version: 19.6.0
+    '@eslint/js':
+      specifier: ^9.17.0
+      version: 9.17.0
+    '@faker-js/faker':
+      specifier: ^9.3.0
+      version: 9.3.0
+    '@iconify/json':
+      specifier: ^2.2.293
+      version: 2.2.293
+    '@iconify/tailwind':
+      specifier: ^1.2.0
+      version: 1.2.0
+    '@iconify/vue':
+      specifier: ^4.3.0
+      version: 4.3.0
+    '@intlify/core-base':
+      specifier: ^11.0.1
+      version: 11.0.1
+    '@intlify/unplugin-vue-i18n':
+      specifier: ^6.0.3
+      version: 6.0.3
+    '@jspm/generator':
+      specifier: ^2.4.2
+      version: 2.4.2
+    '@manypkg/get-packages':
+      specifier: ^2.2.2
+      version: 2.2.2
+    '@nolebase/vitepress-plugin-git-changelog':
+      specifier: ^2.12.0
+      version: 2.12.0
     '@playwright/test':
       specifier: ^1.49.1
       version: 1.49.1
+    '@pnpm/workspace.read-manifest':
+      specifier: ^1000.0.1
+      version: 1000.0.1
+    '@stylistic/stylelint-plugin':
+      specifier: ^3.1.1
+      version: 3.1.1
+    '@tailwindcss/nesting':
+      specifier: 0.0.0-insiders.565cd3e
+      version: 0.0.0-insiders.565cd3e
+    '@tailwindcss/typography':
+      specifier: ^0.5.16
+      version: 0.5.16
+    '@tanstack/vue-query':
+      specifier: ^5.62.16
+      version: 5.62.16
+    '@tanstack/vue-store':
+      specifier: ^0.7.0
+      version: 0.7.0
+    '@types/archiver':
+      specifier: ^6.0.3
+      version: 6.0.3
+    '@types/eslint':
+      specifier: ^9.6.1
+      version: 9.6.1
+    '@types/html-minifier-terser':
+      specifier: ^7.0.2
+      version: 7.0.2
+    '@types/jsonwebtoken':
+      specifier: ^9.0.7
+      version: 9.0.7
+    '@types/lodash.clonedeep':
+      specifier: ^4.5.9
+      version: 4.5.9
+    '@types/lodash.get':
+      specifier: ^4.4.9
+      version: 4.4.9
+    '@types/lodash.isequal':
+      specifier: ^4.5.8
+      version: 4.5.8
     '@types/node':
       specifier: ^22.10.5
       version: 22.10.5
+    '@types/nprogress':
+      specifier: ^0.2.3
+      version: 0.2.3
+    '@types/postcss-import':
+      specifier: ^14.0.3
+      version: 14.0.3
+    '@types/qrcode':
+      specifier: ^1.5.5
+      version: 1.5.5
+    '@types/sortablejs':
+      specifier: ^1.15.8
+      version: 1.15.8
+    '@typescript-eslint/eslint-plugin':
+      specifier: ^8.19.1
+      version: 8.19.1
+    '@typescript-eslint/parser':
+      specifier: ^8.19.1
+      version: 8.19.1
+    '@vee-validate/zod':
+      specifier: ^4.15.0
+      version: 4.15.0
+    '@vite-pwa/vitepress':
+      specifier: ^0.5.3
+      version: 0.5.3
     '@vitejs/plugin-vue':
       specifier: ^5.2.1
       version: 5.2.1
     '@vitejs/plugin-vue-jsx':
       specifier: ^4.1.1
       version: 4.1.1
+    '@vue/shared':
+      specifier: ^3.5.13
+      version: 3.5.13
     '@vue/test-utils':
       specifier: ^2.4.6
       version: 2.4.6
+    '@vueuse/core':
+      specifier: ^12.3.0
+      version: 12.3.0
+    '@vueuse/integrations':
+      specifier: ^12.3.0
+      version: 12.3.0
+    ant-design-vue:
+      specifier: ^4.2.6
+      version: 4.2.6
+    archiver:
+      specifier: ^7.0.1
+      version: 7.0.1
     autoprefixer:
       specifier: ^10.4.20
       version: 10.4.20
+    axios:
+      specifier: ^1.7.9
+      version: 1.7.9
+    axios-mock-adapter:
+      specifier: ^2.1.0
+      version: 2.1.0
+    cac:
+      specifier: ^6.7.14
+      version: 6.7.14
+    chalk:
+      specifier: ^5.4.1
+      version: 5.4.1
+    cheerio:
+      specifier: ^1.0.0
+      version: 1.0.0
+    circular-dependency-scanner:
+      specifier: ^2.3.0
+      version: 2.3.0
+    class-variance-authority:
+      specifier: ^0.7.1
+      version: 0.7.1
+    commitlint-plugin-function-rules:
+      specifier: ^4.0.1
+      version: 4.0.1
+    consola:
+      specifier: ^3.3.3
+      version: 3.3.3
     cross-env:
       specifier: ^7.0.3
       version: 7.0.3
     cspell:
       specifier: ^8.17.1
       version: 8.17.1
+    cssnano:
+      specifier: ^7.0.6
+      version: 7.0.6
+    cz-git:
+      specifier: ^1.11.0
+      version: 1.11.0
+    czg:
+      specifier: ^1.11.0
+      version: 1.11.0
+    dayjs:
+      specifier: ^1.11.13
+      version: 1.11.13
+    defu:
+      specifier: ^6.1.4
+      version: 6.1.4
+    depcheck:
+      specifier: ^1.4.7
+      version: 1.4.7
+    dotenv:
+      specifier: ^16.4.7
+      version: 16.4.7
+    echarts:
+      specifier: ^5.6.0
+      version: 5.6.0
+    element-plus:
+      specifier: ^2.9.2
+      version: 2.9.2
+    eslint:
+      specifier: ^9.17.0
+      version: 9.17.0
+    eslint-config-turbo:
+      specifier: ^2.3.3
+      version: 2.3.3
+    eslint-plugin-command:
+      specifier: ^0.2.7
+      version: 0.2.7
+    eslint-plugin-eslint-comments:
+      specifier: ^3.2.0
+      version: 3.2.0
+    eslint-plugin-import-x:
+      specifier: ^4.6.1
+      version: 4.6.1
+    eslint-plugin-jsdoc:
+      specifier: ^50.6.1
+      version: 50.6.1
+    eslint-plugin-jsonc:
+      specifier: ^2.18.2
+      version: 2.18.2
+    eslint-plugin-n:
+      specifier: ^17.15.1
+      version: 17.15.1
+    eslint-plugin-no-only-tests:
+      specifier: ^3.3.0
+      version: 3.3.0
+    eslint-plugin-perfectionist:
+      specifier: ^4.6.0
+      version: 4.6.0
+    eslint-plugin-prettier:
+      specifier: ^5.2.1
+      version: 5.2.1
+    eslint-plugin-regexp:
+      specifier: ^2.7.0
+      version: 2.7.0
+    eslint-plugin-unicorn:
+      specifier: ^56.0.1
+      version: 56.0.1
+    eslint-plugin-unused-imports:
+      specifier: ^4.1.4
+      version: 4.1.4
+    eslint-plugin-vitest:
+      specifier: ^0.5.4
+      version: 0.5.4
+    eslint-plugin-vue:
+      specifier: ^9.32.0
+      version: 9.32.0
+    execa:
+      specifier: ^9.5.2
+      version: 9.5.2
+    find-up:
+      specifier: ^7.0.0
+      version: 7.0.0
+    get-port:
+      specifier: ^7.1.0
+      version: 7.1.0
+    globals:
+      specifier: ^15.14.0
+      version: 15.14.0
+    h3:
+      specifier: ^1.13.0
+      version: 1.13.0
     happy-dom:
       specifier: ^16.5.3
       version: 16.5.3
+    html-minifier-terser:
+      specifier: ^7.2.0
+      version: 7.2.0
     husky:
       specifier: ^9.1.7
       version: 9.1.7
     is-ci:
       specifier: ^4.1.0
       version: 4.1.0
+    jsonc-eslint-parser:
+      specifier: ^2.4.0
+      version: 2.4.0
+    jsonwebtoken:
+      specifier: ^9.0.2
+      version: 9.0.2
     lint-staged:
       specifier: ^15.3.0
       version: 15.3.0
+    lodash.clonedeep:
+      specifier: ^4.5.0
+      version: 4.5.0
+    lodash.get:
+      specifier: ^4.4.2
+      version: 4.4.2
+    lodash.isequal:
+      specifier: ^4.5.0
+      version: 4.5.0
+    lucide-vue-next:
+      specifier: ^0.469.0
+      version: 0.469.0
+    medium-zoom:
+      specifier: ^1.1.0
+      version: 1.1.0
+    naive-ui:
+      specifier: ^2.41.0
+      version: 2.41.0
+    nitropack:
+      specifier: ^2.10.4
+      version: 2.10.4
+    nprogress:
+      specifier: ^0.2.0
+      version: 0.2.0
+    ora:
+      specifier: ^8.1.1
+      version: 8.1.1
+    pinia-plugin-persistedstate:
+      specifier: ^4.2.0
+      version: 4.2.0
+    pkg-types:
+      specifier: ^1.3.0
+      version: 1.3.0
     playwright:
       specifier: ^1.49.1
       version: 1.49.1
+    postcss:
+      specifier: ^8.4.49
+      version: 8.4.49
+    postcss-antd-fixes:
+      specifier: ^0.2.0
+      version: 0.2.0
+    postcss-html:
+      specifier: ^1.7.0
+      version: 1.7.0
+    postcss-import:
+      specifier: ^16.1.0
+      version: 16.1.0
+    postcss-preset-env:
+      specifier: ^10.1.3
+      version: 10.1.3
+    postcss-scss:
+      specifier: ^4.0.9
+      version: 4.0.9
+    prettier:
+      specifier: ^3.4.2
+      version: 3.4.2
+    prettier-plugin-tailwindcss:
+      specifier: ^0.6.9
+      version: 0.6.9
+    publint:
+      specifier: ^0.2.12
+      version: 0.2.12
+    qrcode:
+      specifier: ^1.5.4
+      version: 1.5.4
+    radix-vue:
+      specifier: ^1.9.12
+      version: 1.9.12
+    resolve.exports:
+      specifier: ^2.0.3
+      version: 2.0.3
     rimraf:
       specifier: ^6.0.1
       version: 6.0.1
+    rollup:
+      specifier: ^4.30.1
+      version: 4.30.1
+    rollup-plugin-visualizer:
+      specifier: ^5.14.0
+      version: 5.14.0
+    sass:
+      specifier: ^1.83.1
+      version: 1.83.1
+    sortablejs:
+      specifier: ^1.15.6
+      version: 1.15.6
+    stylelint:
+      specifier: ^16.12.0
+      version: 16.12.0
+    stylelint-config-recess-order:
+      specifier: ^5.1.1
+      version: 5.1.1
+    stylelint-config-recommended:
+      specifier: ^14.0.1
+      version: 14.0.1
+    stylelint-config-recommended-scss:
+      specifier: ^14.1.0
+      version: 14.1.0
+    stylelint-config-recommended-vue:
+      specifier: ^1.5.0
+      version: 1.5.0
+    stylelint-config-standard:
+      specifier: ^36.0.1
+      version: 36.0.1
+    stylelint-order:
+      specifier: ^6.0.4
+      version: 6.0.4
+    stylelint-prettier:
+      specifier: ^5.0.2
+      version: 5.0.2
+    stylelint-scss:
+      specifier: ^6.10.0
+      version: 6.10.0
+    tailwind-merge:
+      specifier: ^2.6.0
+      version: 2.6.0
     tailwindcss:
       specifier: ^3.4.17
       version: 3.4.17
+    tailwindcss-animate:
+      specifier: ^1.0.7
+      version: 1.0.7
+    theme-colors:
+      specifier: ^0.1.0
+      version: 0.1.0
+    tippy.js:
+      specifier: ^6.2.5
+      version: 6.3.7
     turbo:
       specifier: ^2.3.3
       version: 2.3.3
@@ -66,15 +432,72 @@ catalogs:
     unbuild:
       specifier: ^3.2.0
       version: 3.2.0
+    unplugin-element-plus:
+      specifier: ^0.9.0
+      version: 0.9.0
+    vee-validate:
+      specifier: ^4.15.0
+      version: 4.15.0
     vite:
       specifier: ^6.0.7
       version: 6.0.7
+    vite-plugin-compression:
+      specifier: ^0.5.1
+      version: 0.5.1
+    vite-plugin-dts:
+      specifier: ^4.4.0
+      version: 4.4.0
+    vite-plugin-html:
+      specifier: ^3.2.2
+      version: 3.2.2
+    vite-plugin-lazy-import:
+      specifier: ^1.0.7
+      version: 1.0.7
+    vite-plugin-pwa:
+      specifier: ^0.21.1
+      version: 0.21.1
+    vite-plugin-vue-devtools:
+      specifier: ^7.7.0
+      version: 7.7.0
+    vitepress:
+      specifier: ^1.5.0
+      version: 1.5.0
+    vitepress-plugin-group-icons:
+      specifier: ^1.3.3
+      version: 1.3.3
     vitest:
       specifier: ^2.1.8
       version: 2.1.8
+    vue-eslint-parser:
+      specifier: ^9.4.3
+      version: 9.4.3
+    vue-i18n:
+      specifier: ^11.0.1
+      version: 11.0.1
+    vue-router:
+      specifier: ^4.5.0
+      version: 4.5.0
+    vue-tippy:
+      specifier: ^6.6.0
+      version: 6.6.0
     vue-tsc:
       specifier: 2.1.10
       version: 2.1.10
+    vxe-pc-ui:
+      specifier: ^4.3.67
+      version: 4.3.67
+    vxe-table:
+      specifier: 4.10.0
+      version: 4.10.0
+    watermark-js-plus:
+      specifier: ^1.5.7
+      version: 1.5.7
+    zod:
+      specifier: ^3.24.1
+      version: 3.24.1
+    zod-defaults:
+      specifier: ^0.1.3
+      version: 0.1.3
 
 overrides:
   '@ast-grep/napi': ^0.32.3
@@ -87,6 +510,10 @@ overrides:
 importers:
 
   .:
+    dependencies:
+      socket.io-client:
+        specifier: ^4.8.1
+        version: 4.8.1
     devDependencies:
       '@changesets/changelog-github':
         specifier: 'catalog:'
@@ -3683,6 +4110,9 @@ packages:
     resolution: {integrity: sha512-tlqY9xq5ukxTUZBmoOp+m61cqwQD5pHJtFY3Mn8CA8ps6yghLH/Hw8UPdqg4OLmFW3IFlcXnQNmo/dh8HzXYIQ==}
     engines: {node: '>=18'}
 
+  '@socket.io/component-emitter@3.1.2':
+    resolution: {integrity: sha512-9BCxFwvbGg/RsZK9tjXd8s4UcwR0MWeFQ1XEKIQVVvAGJyINdrqKMcTRyLoK8Rse1GjzLV9cwjWV1olXRWEXVA==}
+
   '@stylistic/stylelint-plugin@3.1.1':
     resolution: {integrity: sha512-XagAHHIa528EvyGybv8EEYGK5zrVW74cHpsjhtovVATbhDRuJYfE+X4HCaAieW9lCkwbX6L+X0I4CiUG3w/hFw==}
     engines: {node: ^18.12 || >=20.9}
@@ -5118,6 +5548,15 @@ packages:
       supports-color:
         optional: true
 
+  debug@4.3.7:
+    resolution: {integrity: sha512-Er2nc/H7RrMXZBFCEim6TCmMk02Z8vLC2Rbi1KEBggpo0fS6l0S1nnapwmIi3yW/+GOJap1Krg4w0Hg80oCqgQ==}
+    engines: {node: '>=6.0'}
+    peerDependencies:
+      supports-color: '*'
+    peerDependenciesMeta:
+      supports-color:
+        optional: true
+
   debug@4.4.0:
     resolution: {integrity: sha512-6WTZ/IxCY/T6BALoZHaE4ctp9xm+Z5kY/pzYaCHRFeyVhojxlrm+46y68HA6hr0TcwEssoxNiDEUJQjfPZ/RYA==}
     engines: {node: '>=6.0'}
@@ -5365,6 +5804,13 @@ packages:
 
   encoding@0.1.13:
     resolution: {integrity: sha512-ETBauow1T35Y/WZMkio9jiM0Z5xjHHmJ4XmjZOq1l/dXz3lr2sRn87nJy20RupqSh1F2m3HHPSp8ShIPQJrJ3A==}
+
+  engine.io-client@6.6.3:
+    resolution: {integrity: sha512-T0iLjnyNWahNyv/lcjS2y4oE358tVS/SYQNxYXGAJ9/GLgH4VCvOQ/mhTjqU88mLZCQgiG8RIegFHYCdVC+j5w==}
+
+  engine.io-parser@5.2.3:
+    resolution: {integrity: sha512-HqD3yTBfnBxIrbnM1DoD6Pcq8NECnh8d4As1Qgh0z5Gg3jRRIqijury0CL3ghu/edArpUYiYqQiDUQBIs4np3Q==}
+    engines: {node: '>=10.0.0'}
 
   enhanced-resolve@5.18.0:
     resolution: {integrity: sha512-0/r0MySGYG8YqlayBZ6MuCfECmHFdJ5qyPh8s8wa5Hnm6SaFLSK1VYCbj+NKp090Nm1caZhD+QTnmxO7esYGyQ==}
@@ -8551,6 +8997,14 @@ packages:
   smob@1.5.0:
     resolution: {integrity: sha512-g6T+p7QO8npa+/hNx9ohv1E5pVCmWrVCUzUXJyLdMmftX6ER0oiWY/w9knEonLpnOp6b6FenKnMfR8gqwWdwig==}
 
+  socket.io-client@4.8.1:
+    resolution: {integrity: sha512-hJVXfu3E28NmzGk8o1sHhN3om52tRvwYeidbj7xKy2eIIse5IoKX3USlS6Tqt3BHAtflLIkCQBkzVrEEfWUyYQ==}
+    engines: {node: '>=10.0.0'}
+
+  socket.io-parser@4.2.4:
+    resolution: {integrity: sha512-/GbIKmo8ioc+NIWIhwdecY0ge+qVBSMdgxGygevmdHj24bsfgtCmcUUcQ5ZzcylGFHsN3k4HB4Cgkl96KVnuew==}
+    engines: {node: '>=10.0.0'}
+
   socks-proxy-agent@5.0.1:
     resolution: {integrity: sha512-vZdmnjb9a2Tz6WEQVIurybSwElwPxMZaIc7PzqbJTrezcKNznv6giT7J7tZDZ1BojVaa1jvO/UiUdhDVB0ACoQ==}
     engines: {node: '>= 6'}
@@ -9735,6 +10189,18 @@ packages:
     resolution: {integrity: sha512-+QU2zd6OTD8XWIJCbffaiQeH9U73qIqafo1x6V1snCWYGJf6cVE0cDR4D8xRzcEnfI21IFrUPzPGtcPf8AC+Rw==}
     engines: {node: ^14.17.0 || ^16.13.0 || >=18.0.0}
 
+  ws@8.17.1:
+    resolution: {integrity: sha512-6XQFvXTkbfUOZOKKILFG1PDK2NDQs4azKQl26T0YS5CxqWLgXajbPZ+h4gZekJyRqFU8pvnbAbbs/3TgRPy+GQ==}
+    engines: {node: '>=10.0.0'}
+    peerDependencies:
+      bufferutil: ^4.0.1
+      utf-8-validate: '>=5.0.2'
+    peerDependenciesMeta:
+      bufferutil:
+        optional: true
+      utf-8-validate:
+        optional: true
+
   xdg-basedir@5.1.0:
     resolution: {integrity: sha512-GCPAHLvrIH13+c0SuacwvRYj2SxJXQ4kaVTT5xgL3kPrz56XxkF21IGhjSE1+W0aw7gpBWRGXLCPnPby6lSpmQ==}
     engines: {node: '>=12'}
@@ -9745,6 +10211,10 @@ packages:
   xml-name-validator@4.0.0:
     resolution: {integrity: sha512-ICP2e+jsHvAj2E2lIHxa5tjXRlKDJo4IdvPvCXbXQGdzSfmSpNVyIKMvoZHjDY9DP0zV17iI85o90vRFXNccRw==}
     engines: {node: '>=12'}
+
+  xmlhttprequest-ssl@2.1.2:
+    resolution: {integrity: sha512-TEU+nJVUUnA4CYJFLvK5X9AOeH4KvDvhIfm0vV1GaQRtchnG0hgK5p8hw/xjv8cunWYCsiPCSDzObPyhEwq3KQ==}
+    engines: {node: '>=0.4.0'}
 
   y18n@4.0.3:
     resolution: {integrity: sha512-JKhqTOwSrqNA1NY5lSztJ1GrBiUodLMmIZuLiDaMRJ+itFd+ABVE8XBjOvIWL+rSqNDC74LCSFmlb/U4UZ4hJQ==}
@@ -10043,7 +10513,7 @@ snapshots:
       '@babel/traverse': 7.26.4
       '@babel/types': 7.26.3
       convert-source-map: 2.0.0
-      debug: 4.4.0
+      debug: 4.4.0(supports-color@9.4.0)
       gensync: 1.0.0-beta.2
       json5: 2.2.3
       semver: 6.3.1
@@ -10704,7 +11174,7 @@ snapshots:
       '@babel/parser': 7.26.3
       '@babel/template': 7.25.9
       '@babel/types': 7.26.3
-      debug: 4.4.0
+      debug: 4.4.0(supports-color@9.4.0)
       globals: 11.12.0
     transitivePeerDependencies:
       - supports-color
@@ -12460,6 +12930,8 @@ snapshots:
 
   '@sindresorhus/merge-streams@4.0.0': {}
 
+  '@socket.io/component-emitter@3.1.2': {}
+
   '@stylistic/stylelint-plugin@3.1.1(stylelint@16.12.0(typescript@5.7.3))':
     dependencies:
       '@csstools/css-parser-algorithms': 3.0.4(@csstools/css-tokenizer@3.0.3)
@@ -14142,7 +14614,7 @@ snapshots:
     dependencies:
       ms: 2.1.3
 
-  debug@4.4.0:
+  debug@4.3.7:
     dependencies:
       ms: 2.1.3
 
@@ -14394,6 +14866,20 @@ snapshots:
     dependencies:
       iconv-lite: 0.6.3
     optional: true
+
+  engine.io-client@6.6.3:
+    dependencies:
+      '@socket.io/component-emitter': 3.1.2
+      debug: 4.3.7
+      engine.io-parser: 5.2.3
+      ws: 8.17.1
+      xmlhttprequest-ssl: 2.1.2
+    transitivePeerDependencies:
+      - bufferutil
+      - supports-color
+      - utf-8-validate
+
+  engine.io-parser@5.2.3: {}
 
   enhanced-resolve@5.18.0:
     dependencies:
@@ -15878,7 +16364,7 @@ snapshots:
     dependencies:
       chalk: 5.4.1
       commander: 12.1.0
-      debug: 4.4.0
+      debug: 4.4.0(supports-color@9.4.0)
       execa: 8.0.1
       lilconfig: 3.1.3
       listr2: 8.2.5
@@ -17842,6 +18328,24 @@ snapshots:
 
   smob@1.5.0: {}
 
+  socket.io-client@4.8.1:
+    dependencies:
+      '@socket.io/component-emitter': 3.1.2
+      debug: 4.3.7
+      engine.io-client: 6.6.3
+      socket.io-parser: 4.2.4
+    transitivePeerDependencies:
+      - bufferutil
+      - supports-color
+      - utf-8-validate
+
+  socket.io-parser@4.2.4:
+    dependencies:
+      '@socket.io/component-emitter': 3.1.2
+      debug: 4.3.7
+    transitivePeerDependencies:
+      - supports-color
+
   socks-proxy-agent@5.0.1:
     dependencies:
       agent-base: 6.0.2
@@ -18720,7 +19224,7 @@ snapshots:
   vite-node@2.1.8(@types/node@22.10.5)(less@4.2.1)(sass@1.83.1)(terser@5.37.0):
     dependencies:
       cac: 6.7.14
-      debug: 4.4.0
+      debug: 4.4.0(supports-color@9.4.0)
       es-module-lexer: 1.6.0
       pathe: 1.1.2
       vite: 5.4.11(@types/node@22.10.5)(less@4.2.1)(sass@1.83.1)(terser@5.37.0)
@@ -18949,7 +19453,7 @@ snapshots:
       '@vitest/spy': 2.1.8
       '@vitest/utils': 2.1.8
       chai: 5.1.2
-      debug: 4.4.0
+      debug: 4.4.0(supports-color@9.4.0)
       expect-type: 1.1.0
       magic-string: 0.30.17
       pathe: 1.1.2
@@ -19305,11 +19809,15 @@ snapshots:
       imurmurhash: 0.1.4
       signal-exit: 4.1.0
 
+  ws@8.17.1: {}
+
   xdg-basedir@5.1.0: {}
 
   xe-utils@3.7.0: {}
 
   xml-name-validator@4.0.0: {}
+
+  xmlhttprequest-ssl@2.1.2: {}
 
   y18n@4.0.3: {}
 
