@@ -152,13 +152,18 @@ const heartbeat = () => {
   if (socket.value) {
     const id = userStore.userInfo?.id;
     socket.value.emit('online-user', { id });
+    socket.value.on('logout', (userId) => {
+      if (userId === userStore.userInfo?.id) {
+        accessStore.setLoginExpired(true);
+      }
+    });
   }
 };
 
 let timer: null | ReturnType<typeof setInterval> = null;
 onMounted(() => {
   socket.value = io(socketUrl);
-  timer = setInterval(heartbeat, 10_000);
+  timer = setInterval(heartbeat, 2000);
 });
 
 onUnmounted(() => {
