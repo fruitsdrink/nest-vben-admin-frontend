@@ -30,11 +30,12 @@ export const useHook = () => {
         },
       },
       {
-        component: 'Select',
+        component: 'TreeSelect',
         componentProps: {
           allowClear: true,
-          options: [],
+          treeData: [],
           placeholder: '请选择',
+          popupClassName: 'text-red-500',
         },
         fieldName: 'departmentId',
         label: '所属部门',
@@ -73,6 +74,7 @@ export const useHook = () => {
       { field: 'username', title: '用户名称' },
       { field: 'nickName', title: '昵称' },
       { field: 'realName', title: '姓名' },
+      { field: 'department.name', title: '所属部门' },
       { field: 'phone', title: '电话' },
       { field: 'email', title: '邮箱' },
       { field: 'gender', title: '性别', slots: { default: 'gender' } },
@@ -86,7 +88,7 @@ export const useHook = () => {
         width: 160,
       },
       { field: 'lastLoginIp', title: '最后登录IP' },
-      { title: '操作', width: 300, slots: { default: 'action' } },
+      { title: '操作', width: 230, slots: { default: 'action' } },
     ],
     data: [],
     pagerConfig: {
@@ -210,10 +212,14 @@ export const useHook = () => {
       {
         fieldName: 'departmentId',
         componentProps: {
-          options: departmentRes.map((item) => ({
-            label: item.name,
-            value: item.id,
-          })),
+          treeDefaultExpandAll: true,
+          treeData: departmentRes,
+          fieldNames: {
+            children: 'children',
+            label: 'name',
+            value: 'id',
+          },
+          treeLine: true,
         },
       },
     ]);

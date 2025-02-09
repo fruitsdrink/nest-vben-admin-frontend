@@ -58,11 +58,11 @@ export const useHook = () => {
   const gridOptions: VxeTableGridOptions<RowType> = {
     columns: [
       { title: '序号', type: 'seq', width: 50 },
-      { field: 'name', title: '部门名称' },
-      { field: 'leader', title: '负责人' },
-      { field: 'phone', title: '部门电话' },
-      { field: 'status', title: '有效状态', slots: { default: 'status' } },
-      { title: '操作', width: 200, slots: { default: 'action' } },
+      { field: 'name', title: '部门名称', treeNode: true, align: 'left' },
+      { field: 'leader', title: '负责人', width: 100 },
+      { field: 'phone', title: '部门电话', width: 200 },
+      { field: 'status', title: '有效状态', slots: { default: 'status' }, width: 100 },
+      { title: '操作', width: 160, slots: { default: 'action' } },
     ],
     data: [],
     pagerConfig: {
@@ -95,6 +95,12 @@ export const useHook = () => {
       zoom: true,
       custom: true,
     },
+    treeConfig: {
+      parentField: 'parentId',
+      rowField: 'id',
+      transform: true,
+      expandAll: true,
+    },
   };
 
   const [Grid, gridApi] = useVbenVxeGrid({
@@ -112,10 +118,12 @@ export const useHook = () => {
 
   async function openForm(id?: number) {
     const row = id ? await DepartmentApi.findById(id) : { status: 1 };
+    const departments = await DepartmentApi.findMany();
     formModalApi
       .setData({
         // 表单值
         values: { id, ...row },
+        departments,
       })
       .setState({
         title: `${id ? '编辑' : '新建'}部门`,
@@ -155,5 +163,13 @@ export const useHook = () => {
       });
   };
 
-  return { Grid, FormModal, handleCreate, handleEdit, handleDelete };
+  const expandAll = () => {
+    gridApi.grid?.setAllTreeExpand(true);
+  };
+
+  const collapseAll = () => {
+    gridApi.grid?.setAllTreeExpand(false);
+  };
+
+  return { Grid, FormModal, handleCreate, handleEdit, handleDelete, expandAll, collapseAll };
 };

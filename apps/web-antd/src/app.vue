@@ -35,3 +35,9 @@ const tokenTheme = computed(() => {
     </App>
   </ConfigProvider>
 </template>
+
+<style scoped>
+:global(.ant-select-tree-treenode) {
+  width: 100% !important;
+}
+</style>

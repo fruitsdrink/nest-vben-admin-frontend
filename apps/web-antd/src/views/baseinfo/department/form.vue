@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import { ref } from 'vue';
+
 import { useVbenModal } from '@vben/common-ui';
 
 import { message } from 'ant-design-vue';
@@ -10,9 +12,28 @@ defineOptions({
   name: 'FormDepartment',
 });
 
+const treeData = ref<DepartmentApi.DepartmentDto[]>([]);
+
 const [Form, formApi] = useVbenForm({
   handleSubmit: onSubmit,
   schema: [
+    {
+      component: 'TreeSelect',
+      componentProps: {
+        allowClear: true,
+        placeholder: '请选择上级部门',
+        treeData,
+        treeDefaultExpandAll: true,
+        fieldNames: {
+          children: 'children',
+          label: 'name',
+          value: 'id',
+        },
+        treeLine: true,
+      },
+      fieldName: 'parentId',
+      label: '上级部门',
+    },
     {
       component: 'Input',
       componentProps: {
@@ -90,7 +111,11 @@ const [Modal, modalApi] = useVbenModal({
   },
   onOpenChange(isOpen: boolean) {
     if (isOpen) {
-      const { values } = modalApi.getData<{ values: DepartmentApi.SaveParams }>();
+      const { values, departments } = modalApi.getData<{
+        departments: DepartmentApi.DepartmentDto[];
+        values: DepartmentApi.SaveParams;
+      }>();
+      treeData.value = departments;
 
       if (values) {
         formApi.setValues(values);

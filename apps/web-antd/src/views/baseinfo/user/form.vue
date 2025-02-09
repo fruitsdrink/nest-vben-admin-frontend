@@ -89,11 +89,18 @@ const [Form, formApi] = useVbenForm({
       defaultValue: 0,
     },
     {
-      component: 'Select',
+      component: 'TreeSelect',
       componentProps: {
-        options: [],
+        treeData: [],
         placeholder: '请选择部门',
         allowClear: true,
+        treeDefaultExpandAll: true,
+        fieldNames: {
+          children: 'children',
+          label: 'name',
+          value: 'id',
+        },
+        treeLine: true,
       },
       fieldName: 'departmentId',
       label: '所属部门',
@@ -237,10 +244,14 @@ onMounted(async () => {
       {
         fieldName: 'departmentId',
         componentProps: {
-          options: departmentRes.map((item) => ({
-            label: item.name,
-            value: item.id,
-          })),
+          treeDefaultExpandAll: true,
+          treeData: departmentRes,
+          fieldNames: {
+            children: 'children',
+            label: 'name',
+            value: 'id',
+          },
+          treeLine: true,
         },
       },
       {
