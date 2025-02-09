@@ -60,9 +60,6 @@
     "update:deps": "npx taze -r -w",
     "version": "pnpm exec changeset version && pnpm install --no-frozen-lockfile"
   },
-  "dependencies": {
-    "socket.io-client": "^4.8.1"
-  },
   "devDependencies": {
     "@changesets/changelog-github": "catalog:",
     "@changesets/cli": "catalog:",

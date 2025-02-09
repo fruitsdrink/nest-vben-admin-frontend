@@ -33,6 +33,7 @@ const [Form, formApi] = useVbenForm({
       },
       fieldName: 'parentId',
       label: '上级部门',
+      controlClass: 'w-full',
     },
     {
       component: 'Input',

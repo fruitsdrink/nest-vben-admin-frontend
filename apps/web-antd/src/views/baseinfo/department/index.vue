@@ -14,9 +14,11 @@ const { Grid, FormModal, handleCreate, handleEdit, handleDelete, expandAll, coll
   <Page auto-content-height>
     <Grid>
       <template #toolbar-tools>
-        <Button class="mr-2" type="primary" @click="expandAll"> 展开全部 </Button>
-        <Button type="primary" @click="collapseAll"> 折叠全部 </Button>
-        <ButtonNew @click="handleCreate" :code="['baseinfo_department_add']" />
+        <div class="flex flex-row items-center gap-2">
+          <Button type="default" @click="expandAll"> 展开全部 </Button>
+          <Button type="default" @click="collapseAll"> 折叠全部 </Button>
+          <ButtonNew @click="handleCreate" :code="['baseinfo_department_add']" />
+        </div>
       </template>
 
       <template #status="{ row }">

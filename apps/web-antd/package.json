@@ -46,7 +46,7 @@
     "ant-design-vue": "catalog:",
     "dayjs": "catalog:",
     "pinia": "catalog:",
-    "socket.io-client": "workspace:*",
+    "socket.io-client": "catalog:",
     "vue": "catalog:",
     "vue-router": "catalog:"
   }

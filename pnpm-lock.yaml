@@ -378,6 +378,9 @@ catalogs:
     sass:
       specifier: ^1.83.1
       version: 1.83.1
+    socket.io-client:
+      specifier: ^4.8.1
+      version: 4.8.1
     sortablejs:
       specifier: ^1.15.6
       version: 1.15.6
@@ -510,10 +513,6 @@ overrides:
 importers:
 
   .:
-    dependencies:
-      socket.io-client:
-        specifier: ^4.8.1
-        version: 4.8.1
     devDependencies:
       '@changesets/changelog-github':
         specifier: 'catalog:'
@@ -696,6 +695,9 @@ importers:
       pinia:
         specifier: ^2.3.0
         version: 2.3.0(typescript@5.7.3)(vue@3.5.13(typescript@5.7.3))
+      socket.io-client:
+        specifier: 'catalog:'
+        version: 4.8.1
       vue:
         specifier: ^3.5.13
         version: 3.5.13(typescript@5.7.3)
