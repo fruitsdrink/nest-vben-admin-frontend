@@ -210,7 +210,7 @@ export const useNotification = () => {
   }
   // 查看全部
   function handleViewAll() {
-    router.push('/system/notification-list');
+    router.push('/notification-list');
   }
 
   function formatDate(date: Date) {
