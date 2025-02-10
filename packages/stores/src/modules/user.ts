@@ -7,6 +7,10 @@ interface BasicUserInfo {
    */
   avatar: string;
   /**
+   * 是否是超级管理员
+   */
+  isAdmin: 0 | 1;
+  /**
    * 用户昵称
    */
   realName: string;
@@ -18,6 +22,7 @@ interface BasicUserInfo {
    * 用户id
    */
   userId: string;
+
   /**
    * 用户名
    */
@@ -43,6 +48,7 @@ export const useUserStore = defineStore('core-user', {
     setUserInfo(userInfo: BasicUserInfo | null) {
       // 设置用户信息
       this.userInfo = userInfo;
+
       // 设置角色信息
       const roles = userInfo?.roles ?? [];
       this.setUserRoles(roles);

@@ -53,7 +53,8 @@ import { useNotification } from '#/views/system/notification/hook';
  * @description: 修改通知列表从后台获取
  * @author: haight
  */
-const { notifications, handleMakeAll, handleNoticeClear, handleViewAll, handleItemClick } = useNotification();
+const { notifications, handleMakeAll, handleNoticeClear, handleViewAll, handleItemClick, handleRefresh } =
+  useNotification();
 
 const userStore = useUserStore();
 const authStore = useAuthStore();
@@ -164,6 +165,28 @@ let timer: null | ReturnType<typeof setInterval> = null;
 onMounted(() => {
   socket.value = io(socketUrl);
   timer = setInterval(heartbeat, 2000);
+  socket.value.on('notification-change', () => {
+    // 收到通知变化，重新获取
+    handleRefresh();
+  });
+  socket.value.on('permission-change', (roleId: number) => {
+    // 收到权限变化，重新获取
+    if (!userStore.userInfo?.isAdmin && userStore.userInfo?.roles?.some((item) => item === String(roleId))) {
+      accessStore.setLoginExpired(true);
+    }
+  });
+  socket.value.on('role-change', (roleId: number) => {
+    // 收到权限变化，重新获取
+    if (!userStore.userInfo?.isAdmin && userStore.userInfo?.roles?.some((item) => item === String(roleId))) {
+      accessStore.setLoginExpired(true);
+    }
+  });
+  socket.value.on('user-change', (userId: number) => {
+    // 收到权限变化，重新获取
+    if (!userStore.userInfo?.isAdmin && userStore.userInfo?.id === userId) {
+      accessStore.setLoginExpired(true);
+    }
+  });
 });
 
 onUnmounted(() => {

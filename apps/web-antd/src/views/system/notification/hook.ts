@@ -217,6 +217,10 @@ export const useNotification = () => {
     return dayjs(date).format('YYYY-MM-DD');
   }
 
+  function handleRefresh() {
+    queryClient.invalidateQueries({ queryKey: ['notifications'] });
+  }
+
   return {
     Grid,
     FormModal,
@@ -228,6 +232,7 @@ export const useNotification = () => {
     handleItemClick,
     handleViewAll,
     formatDate,
+    handleRefresh,
     notifications,
   };
 };
