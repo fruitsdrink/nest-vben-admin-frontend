@@ -22,7 +22,7 @@ export namespace UserApi {
     createdAt: Date;
     lastLoginAt?: Date;
     lastLoginIp?: string;
-    departmentId?: number;
+    departmentId?: string;
     department?: DepartmentApi.DepartmentDto;
     roles?: RoleApi.RoleDto[];
   }
@@ -36,7 +36,7 @@ export namespace UserApi {
 
   export type Profile = {
     avatar: string;
-    department?: { id: number; name: string };
+    department?: { id: string; name: string };
     email?: string;
     id: number;
     isAdmin: boolean;
@@ -97,7 +97,8 @@ export namespace UserApi {
 
   /**
    * 修改密码
-   * @param data
+   * @param data.newPassword 新密码
+   * @param data.password 旧密码
    * newPassword 新密码
    * password 旧密码
    */
@@ -105,12 +106,20 @@ export namespace UserApi {
     return requestClient.post('/baseinfo/user/edit-password', data);
   }
 
+  /**
+   * 上传头像
+   * @param data 表单数据
+   */
   export async function uploadAvatar(data: FormData) {
     return requestClient.post<{ isok: boolean }>('/user/profile/upload-avatar', data, {
       headers: { 'Content-Type': 'multipart/form-data' },
     });
   }
 
+  /**
+   * 更新用户信息
+   * @param data 用户信息
+   */
   export async function updateProfile(data: Partial<UserDto>) {
     return requestClient.put<Profile>('/user/profile', data);
   }

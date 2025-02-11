@@ -1,5 +1,5 @@
 export interface RowType {
-  id: number;
+  id: string;
   name: string;
   leader?: string;
   phone: string;
@@ -7,7 +7,7 @@ export interface RowType {
   createAt: Date;
   status: 0 | 1;
   remark?: string;
-  parentId?: number;
+  parentId?: string;
   canEdit: boolean;
   canDelete: boolean;
 }

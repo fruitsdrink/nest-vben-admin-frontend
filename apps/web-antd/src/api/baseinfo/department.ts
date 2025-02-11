@@ -4,11 +4,11 @@ import { requestClient } from '#/api/request';
 
 export namespace DepartmentApi {
   export interface DepartmentDto {
-    id: number;
+    id: string;
     name: string;
     leader?: string;
     phone?: string;
-    parentId?: number;
+    parentId?: string;
     remark?: string;
     status?: 0 | 1;
     sort: number;
@@ -48,14 +48,14 @@ export namespace DepartmentApi {
   /**
    * 根据id查询部门
    */
-  export async function findById(id: number) {
+  export async function findById(id: string) {
     return requestClient.get<DepartmentDto>(`/baseinfo/department/find/${id}`);
   }
 
   /**
    * 删除部门
    */
-  export async function deleteById(id: number) {
+  export async function deleteById(id: string) {
     return requestClient.delete(`/baseinfo/department/${id}`);
   }
 }

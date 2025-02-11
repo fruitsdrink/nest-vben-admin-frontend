@@ -116,7 +116,7 @@ export const useHook = () => {
     },
   });
 
-  async function openForm(id?: number) {
+  async function openForm(id?: string) {
     const row = id ? await DepartmentApi.findById(id) : { status: 1 };
     const departments = await DepartmentApi.findMany();
     formModalApi
@@ -135,11 +135,11 @@ export const useHook = () => {
     openForm();
   };
 
-  const handleEdit = (id: number) => {
+  const handleEdit = (id: string) => {
     openForm(id);
   };
 
-  const handleDelete = async (id: number) => {
+  const handleDelete = async (id: string) => {
     message.loading({
       content: '正在提交中...',
       duration: 0,
