@@ -105,6 +105,14 @@ const [Form, formApi] = useVbenForm({
       fieldName: 'departmentId',
       label: '所属部门',
       controlClass: 'w-full',
+      dependencies: {
+        required(values) {
+          const { isAdmin } = values;
+          return !!isAdmin;
+        },
+        // 只有指定的字段改变时，才会触发
+        triggerFields: ['isAdmin'],
+      },
     },
     {
       component: 'Select',
@@ -117,6 +125,14 @@ const [Form, formApi] = useVbenForm({
       fieldName: 'roles',
       label: '所属角色',
       controlClass: 'w-full',
+      dependencies: {
+        required(values) {
+          const { isAdmin } = values;
+          return !!isAdmin;
+        },
+        // 只有指定的字段改变时，才会触发
+        triggerFields: ['isAdmin'],
+      },
     },
     {
       component: 'Select',
@@ -179,6 +195,23 @@ const [Modal, modalApi] = useVbenModal({
     modalApi.close();
   },
   onConfirm: async () => {
+    const { isAdmin, departmentId, roles } = await formApi.getValues();
+
+    if (isAdmin && !departmentId) {
+      message.error({
+        content: '请选择所属部门',
+        key: 'submit-error',
+      });
+      return false;
+    }
+
+    if (isAdmin && (!roles || roles.length === 0)) {
+      message.error({
+        content: '请选择所属角色',
+        key: 'submit-error',
+      });
+      return false;
+    }
     await formApi.validateAndSubmitForm();
     // modalApi.close();
   },

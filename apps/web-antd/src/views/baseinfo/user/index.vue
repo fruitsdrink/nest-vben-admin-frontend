@@ -49,6 +49,12 @@ onMounted(() => {
         {{ row.lastLoginAt ? dayjs(row.lastLoginAt).format('YYYY-MM-DD HH:mm:ss') : '' }}
       </template>
 
+      <template #roles="{ row }">
+        <Tag v-for="role in row.roles" :key="role.id">
+          {{ role.name }}
+        </Tag>
+      </template>
+
       <template #action="{ row }">
         <ButtonEdit @click="handleEdit(row.id)" :disabled="!row.canEdit" :code="['baseinfo_user_edit']" />
 

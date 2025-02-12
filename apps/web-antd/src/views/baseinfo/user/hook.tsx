@@ -74,12 +74,12 @@ export const useHook = () => {
       { field: 'username', title: '用户名称' },
       { field: 'nickName', title: '昵称' },
       { field: 'realName', title: '姓名' },
-      { field: 'department.name', title: '所属部门' },
       { field: 'phone', title: '电话' },
       { field: 'email', title: '邮箱' },
       { field: 'gender', title: '性别', slots: { default: 'gender' } },
       { field: 'isAdmin', title: '管理员', slots: { default: 'isAdmin' } },
       { field: 'department.name', title: '部门' },
+      { field: 'roles', title: '角色', slots: { default: 'roles' } },
       { field: 'status', title: '有效状态', slots: { default: 'status' } },
       {
         field: 'lastLoginAt',
