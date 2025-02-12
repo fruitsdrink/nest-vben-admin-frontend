@@ -18,4 +18,6 @@ export interface RowType {
   lastLoginIp?: string;
   canEdit: boolean;
   canDelete: boolean;
+  dataAuth?: string;
+  dataAuthName?: string;
 }

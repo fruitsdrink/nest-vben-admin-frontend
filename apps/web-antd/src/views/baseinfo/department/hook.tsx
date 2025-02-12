@@ -62,6 +62,7 @@ export const useHook = () => {
       { field: 'leader', title: '负责人', width: 100 },
       { field: 'phone', title: '部门电话', width: 200 },
       { field: 'status', title: '有效状态', slots: { default: 'status' }, width: 100 },
+      { field: 'creator.name', title: '创建人', width: 100 },
       { title: '操作', width: 160, slots: { default: 'action' } },
     ],
     data: [],

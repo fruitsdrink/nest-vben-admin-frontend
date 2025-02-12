@@ -25,6 +25,8 @@ export namespace UserApi {
     departmentId?: string;
     department?: DepartmentApi.DepartmentDto;
     roles?: RoleApi.RoleDto[];
+    dataAuth?: string;
+    dataAuthName?: string;
   }
 
   export type SaveParams = Partial<UserDto>;

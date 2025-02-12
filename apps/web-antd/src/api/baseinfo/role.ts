@@ -10,6 +10,8 @@ export namespace RoleApi {
     status?: 0 | 1;
     sort: number;
     createdAt: Date;
+    dataAuth?: string;
+    dataAuthName?: string;
   }
 
   export type SaveParams = Partial<RoleDto>;

@@ -108,7 +108,7 @@ const [Form, formApi] = useVbenForm({
       dependencies: {
         required(values) {
           const { isAdmin } = values;
-          return !!isAdmin;
+          return !isAdmin;
         },
         // 只有指定的字段改变时，才会触发
         triggerFields: ['isAdmin'],
@@ -128,7 +128,7 @@ const [Form, formApi] = useVbenForm({
       dependencies: {
         required(values) {
           const { isAdmin } = values;
-          return !!isAdmin;
+          return !isAdmin;
         },
         // 只有指定的字段改变时，才会触发
         triggerFields: ['isAdmin'],
@@ -165,6 +165,23 @@ const [Form, formApi] = useVbenForm({
       defaultValue: 0,
     },
     {
+      component: 'Select',
+      componentProps: {
+        options: [
+          { label: '所有数据', value: 'All' },
+          { label: '创建人', value: 'Self' },
+          { label: '所属部门', value: 'Department' },
+          { label: '所属部门及下属部门', value: 'DepartmentAndChildren' },
+        ],
+        placeholder: '请选择状态',
+      },
+      fieldName: 'dataAuth',
+      label: '数据权限',
+      rules: 'required',
+      controlClass: 'w-full',
+      defaultValue: 'All',
+    },
+    {
       component: 'InputNumber',
       componentProps: {
         placeholder: '请输入排序编号',
@@ -183,7 +200,7 @@ const [Form, formApi] = useVbenForm({
       },
       fieldName: 'remark',
       label: '备注',
-      formItemClass: 'col-span-2 w-full',
+      // formItemClass: 'col-span-2 w-full',
     },
   ],
   showDefaultActions: false,
@@ -197,7 +214,7 @@ const [Modal, modalApi] = useVbenModal({
   onConfirm: async () => {
     const { isAdmin, departmentId, roles } = await formApi.getValues();
 
-    if (isAdmin && !departmentId) {
+    if (!isAdmin && !departmentId) {
       message.error({
         content: '请选择所属部门',
         key: 'submit-error',
@@ -205,7 +222,7 @@ const [Modal, modalApi] = useVbenModal({
       return false;
     }
 
-    if (isAdmin && (!roles || roles.length === 0)) {
+    if (!isAdmin && (!roles || roles.length === 0)) {
       message.error({
         content: '请选择所属角色',
         key: 'submit-error',

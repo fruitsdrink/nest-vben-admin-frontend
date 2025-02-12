@@ -7,4 +7,6 @@ export interface RowType {
   remark?: string;
   canEdit: boolean;
   canDelete: boolean;
+  dataAuth?: string;
+  dataAuthName?: string;
 }

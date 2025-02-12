@@ -24,6 +24,37 @@ const [Form, formApi] = useVbenForm({
       rules: 'required',
     },
     {
+      component: 'Select',
+      componentProps: {
+        options: [
+          { label: '所有数据', value: 'All' },
+          { label: '创建人', value: 'Self' },
+          { label: '所属部门', value: 'Department' },
+          { label: '所属部门及下属部门', value: 'DepartmentAndChildren' },
+        ],
+        placeholder: '请选择状态',
+      },
+      fieldName: 'dataAuth',
+      label: '数据权限',
+      rules: 'required',
+      controlClass: 'w-full',
+      defaultValue: 'All',
+    },
+    {
+      component: 'Select',
+      componentProps: {
+        options: [
+          { label: '启用', value: 1 },
+          { label: '禁用', value: 0 },
+        ],
+        placeholder: '请选择状态',
+      },
+      fieldName: 'status',
+      label: '有效状态',
+      rules: 'required',
+      controlClass: 'w-full',
+    },
+    {
       component: 'InputNumber',
       componentProps: {
         placeholder: '请输入排序编号',
@@ -42,20 +73,6 @@ const [Form, formApi] = useVbenForm({
       },
       fieldName: 'remark',
       label: '备注',
-    },
-    {
-      component: 'Select',
-      componentProps: {
-        options: [
-          { label: '启用', value: 1 },
-          { label: '禁用', value: 0 },
-        ],
-        placeholder: '请选择状态',
-      },
-      fieldName: 'status',
-      label: '有效状态',
-      rules: 'required',
-      controlClass: 'w-full',
     },
   ],
   showDefaultActions: false,
