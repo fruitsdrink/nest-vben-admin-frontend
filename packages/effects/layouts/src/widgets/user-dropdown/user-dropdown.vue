@@ -60,6 +60,8 @@ interface Props {
   trigger?: 'both' | 'click' | 'hover';
   /** hover触发时，延迟响应的时间 */
   hoverDelay?: number;
+  /** 是否管理员 */
+  isAdmin?: boolean;
 }
 
 defineOptions({
@@ -75,13 +77,13 @@ const props = withDefaults(defineProps<Props>(), {
   tagText: '',
   text: '',
   trigger: 'click',
+  isAdmin: false,
   hoverDelay: 500,
 });
 
 const emit = defineEmits<{ logout: [] }>();
 
-const { globalLockScreenShortcutKey, globalLogoutShortcutKey } =
-  usePreferences();
+const { globalLockScreenShortcutKey, globalLogoutShortcutKey } = usePreferences();
 const lockStore = useLockStore();
 const [LockModal, lockModalApi] = useVbenModal({
   connectedComponent: LockScreenModal,
@@ -94,10 +96,7 @@ const [LogoutModal, logoutModalApi] = useVbenModal({
 
 const refTrigger = useTemplateRef('refTrigger');
 const refContent = useTemplateRef('refContent');
-const [openPopover, hoverWatcher] = useHoverToggle(
-  [refTrigger, refContent],
-  () => props.hoverDelay,
-);
+const [openPopover, hoverWatcher] = useHoverToggle([refTrigger, refContent], () => props.hoverDelay);
 
 watch(
   () => props.trigger === 'hover' || props.trigger === 'both',
@@ -164,12 +163,7 @@ if (enableShortcutKey.value) {
 </script>
 
 <template>
-  <LockModal
-    v-if="preferences.widget.lockScreen"
-    :avatar="avatar"
-    :text="text"
-    @submit="handleSubmitLock"
-  />
+  <LockModal v-if="preferences.widget.lockScreen" :avatar="avatar" :text="text" @submit="handleSubmitLock" />
 
   <LogoutModal
     :cancel-text="$t('common.cancel')"
@@ -188,7 +182,7 @@ if (enableShortcutKey.value) {
     <DropdownMenuTrigger ref="refTrigger" :disabled="props.trigger === 'hover'">
       <div class="hover:bg-accent ml-1 mr-2 cursor-pointer rounded-full p-1.5">
         <div class="hover:text-accent-foreground flex-center">
-          <VbenAvatar :alt="text" :src="avatar" class="size-8" dot />
+          <VbenAvatar :alt="text" :src="avatar" class="size-8" :dot="props.isAdmin" />
         </div>
       </div>
     </DropdownMenuTrigger>
@@ -199,7 +193,7 @@ if (enableShortcutKey.value) {
             :alt="text"
             :src="avatar"
             class="size-12"
-            dot
+            :dot="props.isAdmin"
             dot-class="bottom-0 right-1 border-2 size-4 bg-green-500"
           />
           <div class="ml-2 w-full">
@@ -237,20 +231,13 @@ if (enableShortcutKey.value) {
         >
           <LockKeyhole class="mr-2 size-4" />
           {{ $t('ui.widgets.lockScreen.title') }}
-          <DropdownMenuShortcut v-if="enableLockScreenShortcutKey">
-            {{ altView }} L
-          </DropdownMenuShortcut>
+          <DropdownMenuShortcut v-if="enableLockScreenShortcutKey"> {{ altView }} L </DropdownMenuShortcut>
         </DropdownMenuItem>
         <DropdownMenuSeparator v-if="preferences.widget.lockScreen" />
-        <DropdownMenuItem
-          class="mx-1 flex cursor-pointer items-center rounded-sm py-1 leading-8"
-          @click="handleLogout"
-        >
+        <DropdownMenuItem class="mx-1 flex cursor-pointer items-center rounded-sm py-1 leading-8" @click="handleLogout">
           <LogOut class="mr-2 size-4" />
           {{ $t('common.logout') }}
-          <DropdownMenuShortcut v-if="enableLogoutShortcutKey">
-            {{ altView }} Q
-          </DropdownMenuShortcut>
+          <DropdownMenuShortcut v-if="enableLogoutShortcutKey"> {{ altView }} Q </DropdownMenuShortcut>
         </DropdownMenuItem>
       </div>
     </DropdownMenuContent>

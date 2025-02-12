@@ -114,6 +114,10 @@ const tag = computed(() => {
   return userStore.userInfo?.isAdmin ? '管理员' : '普通用户';
 });
 
+const isAdmin = computed(() => {
+  return !!userStore.userInfo?.isAdmin;
+});
+
 const email = computed(() => {
   return userStore.userInfo?.email;
 });
@@ -208,6 +212,7 @@ onUnmounted(() => {
         :text="userStore.userInfo?.realName"
         :description="email"
         :tag-text="tag"
+        :is-admin="isAdmin"
         @logout="handleLogout"
       />
     </template>
