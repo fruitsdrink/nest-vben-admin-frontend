@@ -4,7 +4,7 @@ import { useSlots } from 'vue';
 
 import { Page } from '@vben/common-ui';
 
-import { Popconfirm } from 'ant-design-vue';
+import { Button, Popconfirm } from 'ant-design-vue';
 
 import { ButtonDelete, ButtonNew } from '#/components';
 import ButtonEdit from '#/components/buttons/button-edit.vue';
@@ -12,13 +12,38 @@ import ButtonEdit from '#/components/buttons/button-edit.vue';
 import { useHook } from './hook';
 
 export default function NvaPage(options: PageOptions) {
-  const { Grid, FormModal, handleCreate, handleEdit, handleDelete, codeNew, codeEdit, codeDelete } = useHook(options);
+  const {
+    Grid,
+    FormModal,
+    handleCreate,
+    handleEdit,
+    handleDelete,
+    codeNew,
+    codeEdit,
+    codeDelete,
+    expandAll,
+    collapseAll,
+  } = useHook(options);
 
   const slots = useSlots();
 
   const slotFns: any = {
     'toolbar-tools': () => {
-      return <ButtonNew code={codeNew ?? undefined} onClick={handleCreate} />;
+      return (
+        <div class="flex flex-row items-center gap-2">
+          {(options as any)['grid-options']?.treeConfig && (
+            <>
+              <Button onClick={expandAll} type="default">
+                展开全部
+              </Button>
+              <Button onClick={collapseAll} type="default">
+                收起全部
+              </Button>
+            </>
+          )}
+          <ButtonNew code={codeNew ?? undefined} onClick={handleCreate} />
+        </div>
+      );
     },
     action: (props: any) => {
       const { row } = props;

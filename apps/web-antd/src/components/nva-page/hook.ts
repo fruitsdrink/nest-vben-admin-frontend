@@ -16,7 +16,18 @@ export const useHook = (options: PageOptions) => {
   Object.keys(options).forEach((key) => {
     camelCaseOptions[changeCase.camelCase(key)] = (options as any)[key];
   });
-  const { title, formOptions, gridOptions, api, defaultRowValue, formTitle, codes, form: Form } = camelCaseOptions;
+
+  const {
+    title,
+    formOptions,
+    gridOptions,
+    api,
+    defaultRowValue,
+    formTitle,
+    codes,
+    form: Form,
+    openFormExtraData,
+  } = camelCaseOptions;
 
   const defaultFormOptions: VbenFormProps = {
     // 默认展开
@@ -95,10 +106,15 @@ export const useHook = (options: PageOptions) => {
       return;
     }
     const row = id ? await api.findById(id) : defaultRowValue;
+    let extraData: any = null;
+    if (openFormExtraData) {
+      extraData = await openFormExtraData(id);
+    }
     formModalApi
       .setData({
         // 表单值
         values: { id, ...row },
+        ...extraData,
       })
       .setState({
         title: `${id ? '编辑' : '新建'}${formTitle ?? title}`,
@@ -142,8 +158,27 @@ export const useHook = (options: PageOptions) => {
       });
   };
 
+  const expandAll = () => {
+    gridApi.grid?.setAllTreeExpand(true);
+  };
+
+  const collapseAll = () => {
+    gridApi.grid?.setAllTreeExpand(false);
+  };
+
   const codeNew = codes?.new ?? [];
   const codeEdit = codes?.edit ?? [];
   const codeDelete = codes?.delete ?? [];
-  return { Grid, FormModal, handleCreate, handleEdit, handleDelete, codeNew, codeEdit, codeDelete };
+  return {
+    Grid,
+    FormModal,
+    handleCreate,
+    handleEdit,
+    handleDelete,
+    codeNew,
+    codeEdit,
+    codeDelete,
+    expandAll,
+    collapseAll,
+  };
 };

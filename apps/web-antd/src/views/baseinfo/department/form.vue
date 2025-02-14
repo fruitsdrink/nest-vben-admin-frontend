@@ -116,6 +116,7 @@ const [Modal, modalApi] = useVbenModal({
         departments: DepartmentApi.DepartmentDto[];
         values: DepartmentApi.SaveParams;
       }>();
+
       treeData.value = departments;
 
       if (values) {

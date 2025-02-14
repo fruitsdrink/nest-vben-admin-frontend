@@ -20,5 +20,6 @@ export type PageOptions = {
   formOptions?: Partial<VbenFormProps>;
   formTitle?: string;
   gridOptions?: Partial<VxeTableGridOptions>;
+  openFormExtraData?: (id: any) => any;
   title?: string;
 };
