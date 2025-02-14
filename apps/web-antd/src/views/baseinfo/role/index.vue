@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Tag } from 'ant-design-vue';
 
-import NvaPage from '#/components/nav-page/NavPage';
+import NvaPage from '#/components/nva-page/NvaPage';
 
 import { useHook } from './hook';
 

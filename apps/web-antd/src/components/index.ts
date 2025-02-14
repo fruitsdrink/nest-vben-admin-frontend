@@ -1,3 +1,3 @@
 export * from './buttons';
-export * from './nav-page';
+export * from './nva-page';
 export * from './row-tag';
