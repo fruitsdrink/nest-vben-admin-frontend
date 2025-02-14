@@ -11,16 +11,20 @@ defineOptions({
   name: 'NotificationList',
 });
 
-const { Grid, handleDelete, formatDate, handleItemClick, handleMakeAll, handleNoticeClear } = useHook();
+const { Grid, handleDelete, formatDate, handleItemClick, handleMakeAll, handleNoticeClear, hasData } = useHook();
 </script>
 
 <template>
   <Page auto-content-height>
     <Grid>
       <template #toolbar-tools>
-        <div class="flex gap-2">
-          <Button type="primary" @click="handleMakeAll">全部标记已读</Button>
-          <Button type="dashed" danger @click="handleNoticeClear">删除全部</Button>
+        <div class="flex gap-2" v-if="hasData">
+          <Popconfirm title="确定标记已读吗?" @confirm="handleMakeAll">
+            <Button type="primary">全部标记已读</Button>
+          </Popconfirm>
+          <Popconfirm title="确定删除吗?" @confirm="handleNoticeClear">
+            <Button type="dashed" danger>删除全部</Button>
+          </Popconfirm>
         </div>
       </template>
 

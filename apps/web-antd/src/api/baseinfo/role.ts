@@ -1,4 +1,4 @@
-import type { Creator, PaginationParams } from '#/types';
+import type { Creator, FindListResult, PaginationParams } from '#/types';
 
 import { requestClient } from '#/api/request';
 
@@ -35,7 +35,7 @@ export namespace RoleApi {
    * 查询分页角色列表
    */
   export async function findList(params: FindListParams) {
-    return requestClient.get<RoleDto[]>('/baseinfo/role', { params });
+    return requestClient.get<FindListResult<RoleDto>>('/baseinfo/role', { params });
   }
 
   /**

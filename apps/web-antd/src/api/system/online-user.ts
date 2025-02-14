@@ -1,4 +1,4 @@
-import type { PaginationParams } from '#/types';
+import type { FindListResult, PaginationParams } from '#/types';
 
 import { requestClient } from '#/api/request';
 
@@ -20,13 +20,8 @@ export namespace OnlineUserApi {
     userName?: string;
   };
 
-  export type FindListDto = {
-    items: ItemDto[];
-    total: number;
-  };
-
   export async function findList(params: FindListParams) {
-    return requestClient.get<FindListDto>('/system/online-user', { params });
+    return requestClient.get<FindListResult<ItemDto>>('/system/online-user', { params });
   }
 
   export async function logout(userId: number) {

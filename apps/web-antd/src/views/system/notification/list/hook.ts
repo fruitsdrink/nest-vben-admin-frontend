@@ -1,6 +1,8 @@
 import type { VbenFormProps } from '@vben/common-ui';
 import type { VxeTableGridOptions } from '@vben/plugins/vxe-table';
 
+import { ref } from 'vue';
+
 import { useVbenVxeGrid } from '@vben/plugins/vxe-table';
 
 import { useQueryClient } from '@tanstack/vue-query';
@@ -11,6 +13,7 @@ import { NotificationApi } from '#/api';
 
 export const useHook = () => {
   const queryClient = useQueryClient();
+  const hasData = ref(false);
 
   const formOptions: VbenFormProps = {
     // 默认展开
@@ -97,13 +100,16 @@ export const useHook = () => {
     proxyConfig: {
       ajax: {
         query: async ({ page, sort }, formValues) => {
-          return await NotificationApi.findListByUserId({
+          const res = await NotificationApi.findListByUserId({
             page: page.currentPage,
             pageSize: page.pageSize,
             sortBy: sort.field,
             sortOrder: sort.order,
             ...formValues,
           });
+          hasData.value = res.total > 0;
+
+          return res;
         },
       },
       sort: true,
@@ -179,5 +185,6 @@ export const useHook = () => {
     handleMakeAll,
     handleItemClick,
     formatDate,
+    hasData,
   };
 };

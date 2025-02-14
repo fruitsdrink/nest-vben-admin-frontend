@@ -2,7 +2,7 @@ import type { NotificationItem } from '@vben/layouts';
 
 import type { UserApi } from '../baseinfo';
 
-import type { PaginationParams } from '#/types';
+import type { FindListResult, PaginationParams } from '#/types';
 
 import { requestClient } from '#/api/request';
 
@@ -62,7 +62,7 @@ export namespace NotificationApi {
    * 查询用户通知公告列表
    */
   export async function findListByUserId(params: FindListParams) {
-    return requestClient.get<ItemDto[]>('/system/notification/user/list', { params });
+    return requestClient.get<FindListResult<ItemDto>>('/system/notification/user/list', { params });
   }
 
   /**

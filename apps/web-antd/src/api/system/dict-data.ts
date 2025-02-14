@@ -1,6 +1,6 @@
 import type { DictTypeApi } from './dict-type';
 
-import type { PaginationParams } from '#/types';
+import type { FindListResult, PaginationParams } from '#/types';
 
 import { requestClient } from '#/api/request';
 
@@ -25,11 +25,6 @@ export namespace DictDataApi {
     value: string;
   };
 
-  export type ListDto = {
-    items: ItemDto[];
-    total: number;
-  };
-
   export interface CreateDto {
     label: string;
     value: string;
@@ -47,7 +42,7 @@ export namespace DictDataApi {
   export type SaveDto = CreateDto | UpdateDto;
 
   export async function findList(params: FindListParams) {
-    return requestClient.get<ListDto>('/system/dict-data', { params });
+    return requestClient.get<FindListResult<ItemDto>>('/system/dict-data', { params });
   }
 
   export async function findById(id: string) {

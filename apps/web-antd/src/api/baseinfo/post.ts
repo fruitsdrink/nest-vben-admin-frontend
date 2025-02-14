@@ -1,4 +1,4 @@
-import type { Creator, PaginationParams } from '#/types';
+import type { Creator, FindListResult, PaginationParams } from '#/types';
 
 import { requestClient } from '#/api/request';
 
@@ -34,7 +34,7 @@ export namespace PostApi {
    * 查询分页角色列表
    */
   export async function findList(params: FindListParams) {
-    return requestClient.get<PostDto[]>('/baseinfo/post', { params });
+    return requestClient.get<FindListResult<PostDto>>('/baseinfo/post', { params });
   }
 
   /**

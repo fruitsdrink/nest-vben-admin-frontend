@@ -1,4 +1,4 @@
-import type { Creator, PaginationParams } from '#/types';
+import type { Creator, FindListResult, PaginationParams } from '#/types';
 
 import { requestClient } from '#/api/request';
 
@@ -36,7 +36,7 @@ export namespace DepartmentApi {
    * 查询部门列表
    */
   export async function findList(params: FindListParams) {
-    return requestClient.get<DepartmentDto[]>('/baseinfo/department', { params });
+    return requestClient.get<FindListResult<DepartmentDto>>('/baseinfo/department', { params });
   }
 
   /**
