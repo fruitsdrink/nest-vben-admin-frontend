@@ -1,23 +1,32 @@
-import { RoleApi } from '#/api';
-import { usePage } from '#/hooks';
+import type { PageOptions } from '#/hooks/use-page/types';
+
+import { PostApi } from '#/api';
+import { createInputSchema, createStatusSchema } from '#/hooks';
+
+import Form from './form.vue';
 
 export const useHook = () => {
-  const Page = usePage({
+  const pageOptions: PageOptions = {
     title: '岗位管理',
-    gridOption: {
+    'form-options': {
+      schema: [createInputSchema({ title: '岗位名称', fieldName: 'name' }), createStatusSchema()],
+    },
+    'grid-options': {
       columns: [
         { title: '序号', type: 'seq', width: 50 },
         { field: 'name', title: '角色名称' },
+        { field: 'sort', title: '排序编号' },
         { field: 'status', title: '有效状态', slots: { default: 'status' } },
-        { field: 'dataAuthName', title: '数据权限', width: 140 },
         { field: 'creator.name', title: '创建人', width: 100 },
         { title: '操作', width: 200, slots: { default: 'action' } },
       ],
     },
     api: {
-      findList: RoleApi.findList,
+      findList: PostApi.findList,
+      findById: PostApi.findById,
+      deleteById: PostApi.deleteById,
     },
-  });
+  };
 
-  return { Page };
+  return { pageOptions, Form };
 };

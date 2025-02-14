@@ -9,45 +9,21 @@ import { message } from 'ant-design-vue';
 
 import { useVbenVxeGrid } from '#/adapter/vxe-table';
 
-import Form from './form.vue';
-
 export const useHook = (options: PageOptions) => {
-  const { title, formOptions, gridOption, api, defaultRowValue, codes } = options;
-
+  const {
+    title,
+    'form-options': formOptions,
+    'grid-options': gridOptions,
+    api,
+    'default-row-value': defaultRowValue,
+    codes,
+    form: Form,
+  } = options;
   const defaultFormOptions: VbenFormProps = {
     // 默认展开
     collapsed: false,
     fieldMappingTime: [['date', ['start', 'end']]],
-    schema: [
-      {
-        component: 'Input',
-        defaultValue: '',
-        fieldName: 'keyword',
-        label: '角色名称',
-        componentProps: {
-          allowClear: true,
-        },
-      },
-      {
-        component: 'Select',
-        componentProps: {
-          allowClear: true,
-          options: [
-            {
-              label: '启用',
-              value: '1',
-            },
-            {
-              label: '禁用',
-              value: '0',
-            },
-          ],
-          placeholder: '请选择',
-        },
-        fieldName: 'status',
-        label: '有效状态',
-      },
-    ],
+    schema: [],
     // 控制表单是否显示折叠按钮
     showCollapseButton: false,
     // 是否在字段值改变时提交表单
@@ -99,7 +75,7 @@ export const useHook = (options: PageOptions) => {
   };
   const pageGridOptions: VxeTableGridOptions = {
     ...defaultGridOptions,
-    ...gridOption,
+    ...gridOptions,
   };
 
   const [Grid, gridApi] = useVbenVxeGrid({

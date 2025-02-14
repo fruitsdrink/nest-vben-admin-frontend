@@ -1,9 +1,35 @@
 <script setup lang="ts">
+import { Tag } from 'ant-design-vue';
+
+import NvaPage from '#/hooks/use-page';
+
 import { useHook } from './hook';
 
-const { Page } = useHook();
+const {
+  pageOptions: {
+    title,
+    codes,
+    api,
+    'form-options': formOptions,
+    'grid-options': gridOptions,
+    'default-row-value': defaultRowValue,
+  },
+  Form,
+} = useHook();
 </script>
 
 <template>
-  <Page />
+  <NvaPage
+    :grid-options="gridOptions"
+    :form-options="formOptions"
+    :title="title"
+    :codes="codes"
+    :api="api"
+    :default-row-value="defaultRowValue"
+    :form="Form"
+  >
+    <template #status="{ row }">
+      <Tag :color="row.status ? 'success' : 'error'">{{ row.status ? '启用' : '禁用' }}</Tag>
+    </template>
+  </NvaPage>
 </template>
