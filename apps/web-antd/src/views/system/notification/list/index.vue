@@ -3,7 +3,7 @@ import { Page } from '@vben/common-ui';
 
 import { Button, Popconfirm, Tag } from 'ant-design-vue';
 
-import { ButtonDelete } from '#/components/buttons';
+import { LinkButtonDelete } from '#/components/buttons';
 
 import { useHook } from './hook';
 
@@ -43,7 +43,7 @@ const { Grid, handleDelete, formatDate, handleItemClick, handleMakeAll, handleNo
           标记已读
         </Button>
         <Popconfirm title="确定删除吗?" @confirm="handleDelete(row.noticeId)">
-          <ButtonDelete :disabled="!row.canDelete" :code="['baseinfo_role_delete']" />
+          <LinkButtonDelete :disabled="!row.canDelete" :code="['baseinfo_role_delete']" />
         </Popconfirm>
       </template>
     </Grid>

@@ -1,73 +1,65 @@
 <script setup lang="ts">
-import { onMounted } from 'vue';
-
-import { Page } from '@vben/common-ui';
-
 import { Popconfirm, Tag } from 'ant-design-vue';
 import dayjs from 'dayjs';
 
-import { ButtonDelete, ButtonEdit, ButtonNew } from '#/components/buttons';
+import { NvaButton, NvaPage, RowTag } from '#/components';
 
 import { useHook } from './hook';
 
 const {
-  Grid,
-  FormModal,
+  pageOptions: {
+    title,
+    codes,
+    api,
+    formOptions,
+    gridOptions,
+    defaultRowValue,
+    formTitle,
+    onMountedCallback,
+    formClass,
+  },
+  Form,
   ResetPasswordFormModal,
-  handleCreate,
-  handleEdit,
-  handleDelete,
   handleResetPassword,
-  handleOnMounted,
 } = useHook();
-
-onMounted(() => {
-  handleOnMounted();
-});
 </script>
 
 <template>
-  <Page auto-content-height>
-    <Grid>
-      <template #toolbar-tools>
-        <ButtonNew @click="handleCreate" :code="['baseinfo_user_add']" />
-      </template>
+  <NvaPage
+    :grid-options="gridOptions"
+    :form-options="formOptions"
+    :title="title"
+    :codes="codes"
+    :api="api"
+    :default-row-value="defaultRowValue"
+    :form="Form"
+    :form-title="formTitle"
+    :form-class="formClass"
+    :on-mounted-callback="onMountedCallback"
+  >
+    <template #status="{ row }">
+      <RowTag :row="row" />
+    </template>
 
-      <template #status="{ row }">
-        <Tag :color="row.status ? 'success' : 'error'">{{ row.status ? '启用' : '禁用' }}</Tag>
-      </template>
+    <template #isAdmin="{ row }">
+      <Tag :color="row.isAdmin ? 'blue' : 'default'">{{ row.isAdmin ? '是' : '否' }}</Tag>
+    </template>
 
-      <template #gender="{ row }">
-        {{ row.gender ? (row.gender === 1 ? '男' : '女') : '未知' }}
-      </template>
+    <template #lastLoginAt="{ row }">
+      {{ row.lastLoginAt ? dayjs(row.lastLoginAt).format('YYYY-MM-DD HH:mm:ss') : '' }}
+    </template>
 
-      <template #isAdmin="{ row }">
-        <Tag :color="row.isAdmin ? 'red' : 'default'">{{ row.isAdmin ? '是' : '否' }}</Tag>
-      </template>
+    <template #action-after="{ row }">
+      <Popconfirm title="确定重置密码吗?" @confirm="handleResetPassword(row.id, row.username)">
+        <NvaButton :code="['baseinfo_user_resetPassword']" type="link"> 重置密码 </NvaButton>
+      </Popconfirm>
+    </template>
 
-      <template #lastLoginAt="{ row }">
-        {{ row.lastLoginAt ? dayjs(row.lastLoginAt).format('YYYY-MM-DD HH:mm:ss') : '' }}
-      </template>
-
-      <template #roles="{ row }">
-        <Tag v-for="role in row.roles" :key="role.id">
-          {{ role.name }}
-        </Tag>
-      </template>
-
-      <template #action="{ row }">
-        <ButtonEdit @click="handleEdit(row.id)" :disabled="!row.canEdit" :code="['baseinfo_user_edit']" />
-
-        <Popconfirm title="确定删除吗?" @confirm="handleDelete(row.id)">
-          <ButtonDelete :disabled="!row.canDelete" :code="['baseinfo_user_delete']" />
-        </Popconfirm>
-
-        <Popconfirm title="确定重置密码吗?" @confirm="handleResetPassword(row.id, row.username)">
-          <ButtonDelete title="重置密码" :code="['baseinfo_user_resetPassword']" />
-        </Popconfirm>
-      </template>
-    </Grid>
-    <FormModal />
+    <template #roles="{ row }">
+      <Tag v-for="role in row.roles" :key="role.id">
+        {{ role.name }}
+      </Tag>
+    </template>
     <ResetPasswordFormModal />
-  </Page>
+  </NvaPage>
 </template>

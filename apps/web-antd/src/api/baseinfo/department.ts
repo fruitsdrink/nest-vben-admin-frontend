@@ -1,4 +1,4 @@
-import type { PaginationParams } from '#/types';
+import type { Creator, PaginationParams } from '#/types';
 
 import { requestClient } from '#/api/request';
 
@@ -13,6 +13,7 @@ export namespace DepartmentApi {
     status?: 0 | 1;
     sort: number;
     createdAt: Date;
+    creator: Creator;
   }
 
   export type SaveParams = Partial<DepartmentDto>;

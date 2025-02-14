@@ -27,6 +27,11 @@ export const useHook = () => {
       findById: PostApi.findById,
       deleteById: PostApi.deleteById,
     },
+    codes: {
+      new: ['baseinfo_post_add'],
+      edit: ['baseinfo_post_edit'],
+      delete: ['baseinfo_post_delete'],
+    },
   };
 
   return { pageOptions, Form };

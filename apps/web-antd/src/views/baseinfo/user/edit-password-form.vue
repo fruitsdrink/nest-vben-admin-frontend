@@ -19,31 +19,31 @@ const [Form, formApi] = useVbenForm({
     {
       component: 'InputPassword',
       componentProps: {
-        placeholder: '请输入登录密码',
+        placeholder: '请输入旧密码',
         allowClear: true,
       },
       fieldName: 'password',
-      label: '登录密码',
+      label: '当前密码',
       rules: 'required',
     },
     {
       component: 'InputPassword',
       componentProps: {
-        placeholder: '请输入新登录密码',
+        placeholder: '请输入新密码',
         allowClear: true,
       },
       fieldName: 'newPassword',
-      label: '新登录密码',
+      label: '新密码',
       rules: 'required',
     },
     {
       component: 'InputPassword',
       componentProps: {
-        placeholder: '请再次输入新登录密码',
+        placeholder: '确认密码密码',
         allowClear: true,
       },
       fieldName: 'newPassword2',
-      label: '确认新登录密码',
+      label: '确认密码',
       dependencies: {
         rules(values) {
           const { newPassword } = values;

@@ -27,6 +27,11 @@ export const useHook = () => {
       findById: RoleApi.findById,
       deleteById: RoleApi.deleteById,
     },
+    codes: {
+      new: ['baseinfo_role_add'],
+      edit: ['baseinfo_role_edit'],
+      delete: ['baseinfo_role_delete'],
+    },
   };
 
   return { pageOptions, Form };

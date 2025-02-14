@@ -162,6 +162,9 @@ catalogs:
     chalk:
       specifier: ^5.4.1
       version: 5.4.1
+    change-case:
+      specifier: ^5.4.4
+      version: 5.4.4
     cheerio:
       specifier: ^1.0.0
       version: 1.0.0
@@ -513,10 +516,6 @@ overrides:
 importers:
 
   .:
-    dependencies:
-      change-case:
-        specifier: ^5.4.4
-        version: 5.4.4
     devDependencies:
       '@changesets/changelog-github':
         specifier: 'catalog:'
@@ -693,6 +692,9 @@ importers:
       ant-design-vue:
         specifier: 'catalog:'
         version: 4.2.6(vue@3.5.13(typescript@5.7.3))
+      change-case:
+        specifier: 'catalog:'
+        version: 5.4.4
       dayjs:
         specifier: 'catalog:'
         version: 1.11.13

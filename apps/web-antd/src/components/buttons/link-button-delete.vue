@@ -3,6 +3,10 @@ import { Button } from 'ant-design-vue';
 
 import { useAccessCode } from '#/hooks';
 
+defineOptions({
+  name: 'LinkButtonDelete',
+});
+
 const { disabled, title, code } = defineProps({
   disabled: {
     type: Boolean,

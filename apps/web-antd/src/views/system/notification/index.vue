@@ -3,7 +3,7 @@ import { Page } from '@vben/common-ui';
 
 import { Popconfirm, Tag } from 'ant-design-vue';
 
-import { ButtonDelete, ButtonEdit, ButtonNew } from '#/components/buttons';
+import { ButtonNew, LinkButtonDelete, LinkButtonEdit } from '#/components/buttons';
 
 import { useNotification } from './hook';
 
@@ -34,9 +34,9 @@ const { Grid, FormModal, handleCreate, handleEdit, handleDelete, formatDate } = 
       </template>
 
       <template #action="{ row }">
-        <ButtonEdit @click="handleEdit(row.id)" :disabled="!row.canEdit" :code="['baseinfo_role_edit']" />
+        <LinkButtonEdit @click="handleEdit(row.id)" :disabled="!row.canEdit" :code="['baseinfo_role_edit']" />
         <Popconfirm title="确定删除吗?" @confirm="handleDelete(row.id)">
-          <ButtonDelete :disabled="!row.canDelete" :code="['baseinfo_role_delete']" />
+          <LinkButtonDelete :disabled="!row.canDelete" :code="['baseinfo_role_delete']" />
         </Popconfirm>
       </template>
     </Grid>

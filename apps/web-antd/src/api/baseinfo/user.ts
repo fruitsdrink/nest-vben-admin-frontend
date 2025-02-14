@@ -1,7 +1,7 @@
 import type { DepartmentApi } from './department';
 import type { RoleApi } from './role';
 
-import type { PaginationParams } from '#/types';
+import type { Creator, PaginationParams } from '#/types';
 
 import { requestClient } from '#/api/request';
 
@@ -27,6 +27,7 @@ export namespace UserApi {
     roles?: RoleApi.RoleDto[];
     dataAuth?: string;
     dataAuthName?: string;
+    creator: Creator;
   }
 
   export type SaveParams = Partial<UserDto>;

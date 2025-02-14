@@ -58,3 +58,18 @@ export const createStatusSchema = () => {
     label: '有效状态',
   };
 };
+
+export const createTreeSelect = (opts: { fieldName: string; title: string }) => {
+  const { title, fieldName } = opts;
+  return {
+    component: 'TreeSelect',
+    componentProps: {
+      allowClear: true,
+      treeData: [],
+      placeholder: '请选择',
+      popupClassName: '',
+    },
+    fieldName,
+    label: title,
+  };
+};

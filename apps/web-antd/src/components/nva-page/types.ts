@@ -1,5 +1,8 @@
 import type { Component } from 'vue';
 
+import type { ExtendedModalApi } from '@vben/common-ui';
+import type { ExtendedVxeGridApi } from '@vben/plugins/vxe-table';
+
 import type { VbenFormProps } from '#/adapter/form';
 import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 
@@ -17,9 +20,11 @@ export type PageOptions = {
   };
   defaultRowValue?: any;
   form?: Component;
+  formClass?: string;
   formOptions?: Partial<VbenFormProps>;
   formTitle?: string;
   gridOptions?: Partial<VxeTableGridOptions>;
+  onMountedCallback?: (opts: { formModalApi: ExtendedModalApi; gridApi: ExtendedVxeGridApi }) => void;
   openFormExtraData?: (id: any) => any;
   title?: string;
 };

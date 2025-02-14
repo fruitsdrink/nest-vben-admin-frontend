@@ -27,7 +27,9 @@ export const useHook = (options: PageOptions) => {
     codes,
     form: Form,
     openFormExtraData,
-  } = camelCaseOptions;
+    formClass,
+    onMountedCallback,
+  } = camelCaseOptions as PageOptions;
 
   const defaultFormOptions: VbenFormProps = {
     // 默认展开
@@ -99,6 +101,7 @@ export const useHook = (options: PageOptions) => {
     onClosed() {
       gridApi.reload();
     },
+    class: formClass,
   });
 
   async function openForm(id?: number | string) {
@@ -180,5 +183,8 @@ export const useHook = (options: PageOptions) => {
     codeDelete,
     expandAll,
     collapseAll,
+    onMountedCallback,
+    gridApi,
+    formModalApi,
   };
 };
