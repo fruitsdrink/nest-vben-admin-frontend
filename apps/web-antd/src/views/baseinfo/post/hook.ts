@@ -1,7 +1,7 @@
-import type { PageOptions } from '#/hooks/use-page/types';
+import type { PageOptions } from '#/components/nav-page/types';
 
 import { PostApi } from '#/api';
-import { createInputSchema, createStatusSchema } from '#/hooks';
+import { createInputSchema, createStatusSchema } from '#/components';
 
 import Form from './form.vue';
 
