@@ -1,12 +1,10 @@
 <script setup lang="ts">
-import { Tag } from 'ant-design-vue';
-
-import NvaPage from '#/components/nva-page/NvaPage';
+import { NvaPage, RowTag } from '#/components';
 
 import { useHook } from './hook';
 
 const {
-  pageOptions: { title, codes, api, formOptions, gridOptions, defaultRowValue },
+  pageOptions: { title, codes, api, formOptions, gridOptions, defaultRowValue, formTitle },
   Form,
 } = useHook();
 </script>
@@ -20,9 +18,10 @@ const {
     :api="api"
     :default-row-value="defaultRowValue"
     :form="Form"
+    :form-title="formTitle"
   >
     <template #status="{ row }">
-      <Tag :color="row.status ? 'success' : 'error'">{{ row.status ? '启用' : '禁用' }}</Tag>
+      <RowTag :row="row" />
     </template>
   </NvaPage>
 </template>

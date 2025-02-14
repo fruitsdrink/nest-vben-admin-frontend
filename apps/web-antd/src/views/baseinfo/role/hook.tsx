@@ -8,6 +8,7 @@ import Form from './form.vue';
 export const useHook = () => {
   const pageOptions: PageOptions = {
     title: '角色管理',
+    formTitle: '角色',
     formOptions: {
       schema: [createKeywordSchema({ title: '角色名称' }), createStatusSchema()],
     },
