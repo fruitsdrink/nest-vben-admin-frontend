@@ -15,9 +15,10 @@ export type PageOptions = {
     edit?: string[];
     new?: string[];
   };
-  'default-row-value'?: any;
+  defaultRowValue?: any;
   form?: Component;
-  'form-options'?: Partial<VbenFormProps>;
-  'grid-options'?: Partial<VxeTableGridOptions>;
+  formOptions?: Partial<VbenFormProps>;
+  formTitle?: string;
+  gridOptions?: Partial<VxeTableGridOptions>;
   title?: string;
 };

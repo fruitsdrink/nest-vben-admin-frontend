@@ -1,33 +1,28 @@
 <script setup lang="ts">
-import { Page } from '@vben/common-ui';
+import { Tag } from 'ant-design-vue';
 
-import { Popconfirm, Tag } from 'ant-design-vue';
-
-import { ButtonDelete, ButtonEdit, ButtonNew } from '#/components/buttons';
+import NvaPage from '#/components/nav-page/NavPage';
 
 import { useHook } from './hook';
 
-const { Grid, FormModal, handleCreate, handleEdit, handleDelete } = useHook();
+const {
+  pageOptions: { title, codes, api, formOptions, gridOptions, defaultRowValue },
+  Form,
+} = useHook();
 </script>
 
 <template>
-  <Page auto-content-height>
-    <Grid>
-      <template #toolbar-tools>
-        <ButtonNew @click="handleCreate" :code="['baseinfo_role_add']" />
-      </template>
-
-      <template #status="{ row }">
-        <Tag :color="row.status ? 'success' : 'error'">{{ row.status ? '启用' : '禁用' }}</Tag>
-      </template>
-
-      <template #action="{ row }">
-        <ButtonEdit @click="handleEdit(row.id)" :disabled="!row.canEdit" :code="['baseinfo_role_edit']" />
-        <Popconfirm title="确定删除吗?" @confirm="handleDelete(row.id)">
-          <ButtonDelete :disabled="!row.canDelete" :code="['baseinfo_role_delete']" />
-        </Popconfirm>
-      </template>
-    </Grid>
-    <FormModal />
-  </Page>
+  <NvaPage
+    :grid-options="gridOptions"
+    :form-options="formOptions"
+    :title="title"
+    :codes="codes"
+    :api="api"
+    :default-row-value="defaultRowValue"
+    :form="Form"
+  >
+    <template #status="{ row }">
+      <Tag :color="row.status ? 'success' : 'error'">{{ row.status ? '启用' : '禁用' }}</Tag>
+    </template>
+  </NvaPage>
 </template>

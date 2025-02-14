@@ -1,4 +1,4 @@
-import type { PageOptions } from '#/components/nav-page/types';
+import type { PageOptions } from '#/components';
 
 import { PostApi } from '#/api';
 import { createInputSchema, createStatusSchema } from '#/components';
@@ -8,10 +8,11 @@ import Form from './form.vue';
 export const useHook = () => {
   const pageOptions: PageOptions = {
     title: '岗位管理',
-    'form-options': {
+    formTitle: '岗位',
+    formOptions: {
       schema: [createInputSchema({ title: '岗位名称', fieldName: 'name' }), createStatusSchema()],
     },
-    'grid-options': {
+    gridOptions: {
       columns: [
         { title: '序号', type: 'seq', width: 50 },
         { field: 'name', title: '角色名称' },

@@ -1,4 +1,4 @@
-import type { PageOptions } from './types';
+import type { RowType } from './types';
 
 import type { VbenFormProps } from '#/adapter/form';
 import type { VxeTableGridOptions } from '#/adapter/vxe-table';
@@ -6,23 +6,47 @@ import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 import { useVbenModal } from '@vben/common-ui';
 
 import { message } from 'ant-design-vue';
-import * as changeCase from 'change-case';
 
 import { useVbenVxeGrid } from '#/adapter/vxe-table';
+import { RoleApi } from '#/api';
 
-export const useHook = (options: PageOptions) => {
-  const camelCaseOptions: Record<string, any> = {};
+import Form from './form.vue';
 
-  Object.keys(options).forEach((key) => {
-    camelCaseOptions[changeCase.camelCase(key)] = (options as any)[key];
-  });
-  const { title, formOptions, gridOptions, api, defaultRowValue, formTitle, codes, form: Form } = camelCaseOptions;
-
-  const defaultFormOptions: VbenFormProps = {
+export const useHook = () => {
+  const formOptions: VbenFormProps = {
     // 默认展开
     collapsed: false,
     fieldMappingTime: [['date', ['start', 'end']]],
-    schema: [],
+    schema: [
+      {
+        component: 'Input',
+        defaultValue: '',
+        fieldName: 'keyword',
+        label: '角色名称',
+        componentProps: {
+          allowClear: true,
+        },
+      },
+      {
+        component: 'Select',
+        componentProps: {
+          allowClear: true,
+          options: [
+            {
+              label: '启用',
+              value: '1',
+            },
+            {
+              label: '禁用',
+              value: '0',
+            },
+          ],
+          placeholder: '请选择',
+        },
+        fieldName: 'status',
+        label: '有效状态',
+      },
+    ],
     // 控制表单是否显示折叠按钮
     showCollapseButton: false,
     // 是否在字段值改变时提交表单
@@ -31,8 +55,15 @@ export const useHook = (options: PageOptions) => {
     submitOnEnter: false,
   };
 
-  const defaultGridOptions: VxeTableGridOptions = {
-    columns: [{ title: '操作', width: 200, slots: { default: 'action' } }],
+  const gridOptions: VxeTableGridOptions<RowType> = {
+    columns: [
+      { title: '序号', type: 'seq', width: 50 },
+      { field: 'name', title: '角色名称' },
+      { field: 'status', title: '有效状态', slots: { default: 'status' } },
+      { field: 'dataAuthName', title: '数据权限', width: 140 },
+      { field: 'creator.name', title: '创建人', width: 100 },
+      { title: '操作', width: 200, slots: { default: 'action' } },
+    ],
     data: [],
     pagerConfig: {
       enabled: true,
@@ -47,15 +78,13 @@ export const useHook = (options: PageOptions) => {
     proxyConfig: {
       ajax: {
         query: async ({ page, sort }, formValues) => {
-          if (api && api.findList) {
-            return await api.findList({
-              page: page.currentPage,
-              pageSize: page.pageSize,
-              sortBy: sort.field,
-              sortOrder: sort.order,
-              ...formValues,
-            });
-          }
+          return await RoleApi.findList({
+            page: page.currentPage,
+            pageSize: page.pageSize,
+            sortBy: sort.field,
+            sortOrder: sort.order,
+            ...formValues,
+          });
         },
       },
       sort: true,
@@ -68,19 +97,10 @@ export const useHook = (options: PageOptions) => {
     },
   };
 
-  const pageFormOptions: VbenFormProps = {
-    ...defaultFormOptions,
-    ...formOptions,
-  };
-  const pageGridOptions: VxeTableGridOptions = {
-    ...defaultGridOptions,
-    ...gridOptions,
-  };
-
   const [Grid, gridApi] = useVbenVxeGrid({
-    tableTitle: title,
-    formOptions: pageFormOptions,
-    gridOptions: pageGridOptions,
+    tableTitle: '角色管理',
+    formOptions,
+    gridOptions,
   });
 
   const [FormModal, formModalApi] = useVbenModal({
@@ -90,18 +110,15 @@ export const useHook = (options: PageOptions) => {
     },
   });
 
-  async function openForm(id?: number | string) {
-    if (!api || !api.findById) {
-      return;
-    }
-    const row = id ? await api.findById(id) : defaultRowValue;
+  async function openForm(id?: number) {
+    const row = id ? await RoleApi.findById(id) : { status: 1 };
     formModalApi
       .setData({
         // 表单值
         values: { id, ...row },
       })
       .setState({
-        title: `${id ? '编辑' : '新建'}${formTitle ?? title}`,
+        title: `${id ? '编辑' : '新建'}角色`,
       })
       .open();
   }
@@ -110,21 +127,17 @@ export const useHook = (options: PageOptions) => {
     openForm();
   };
 
-  const handleEdit = (id: any) => {
+  const handleEdit = (id: number) => {
     openForm(id);
   };
 
   const handleDelete = async (id: number) => {
-    if (!api || !api.deleteById) {
-      return;
-    }
     message.loading({
       content: '正在提交中...',
       duration: 0,
       key: 'is-delete-role',
     });
-    api
-      .deleteById(id)
+    RoleApi.deleteById(id)
       .then(() => {
         gridApi.reload();
         message.success({
@@ -142,8 +155,5 @@ export const useHook = (options: PageOptions) => {
       });
   };
 
-  const codeNew = codes?.new ?? [];
-  const codeEdit = codes?.edit ?? [];
-  const codeDelete = codes?.delete ?? [];
-  return { Grid, FormModal, handleCreate, handleEdit, handleDelete, codeNew, codeEdit, codeDelete };
+  return { Grid, FormModal, handleCreate, handleEdit, handleDelete };
 };

@@ -1,4 +1,4 @@
-import type { PaginationParams } from '#/types';
+import type { Creator, PaginationParams } from '#/types';
 
 import { requestClient } from '#/api/request';
 
@@ -12,6 +12,7 @@ export namespace RoleApi {
     createdAt: Date;
     dataAuth?: string;
     dataAuthName?: string;
+    creator: Creator;
   }
 
   export type SaveParams = Partial<RoleDto>;
