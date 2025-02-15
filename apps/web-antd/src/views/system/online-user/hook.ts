@@ -1,6 +1,8 @@
 import type { VbenFormProps } from '#/adapter/form';
 import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 
+import { useAccessStore, useUserStore } from '@vben/stores';
+
 import { message } from 'ant-design-vue';
 
 import { useVbenVxeGrid } from '#/adapter/vxe-table';
@@ -82,29 +84,32 @@ export const useHook = () => {
     gridOptions,
   });
 
-  const handleLogout = async (id: number) => {
+  const handleLogout = async (id: number, token: string) => {
     message.loading({
       content: '正在提交中...',
       duration: 0,
-      key: 'is-delete-role',
+      key: 'is-logout',
     });
-    await OnlineUserApi.logout(id)
+    await OnlineUserApi.logout(id, token)
       .then(() => {
         gridApi.reload();
         message.success({
           content: '强退成功',
           duration: 2,
-          key: 'is-delete-role',
+          key: 'is-logout',
         });
       })
       .catch(() => {
         message.error({
           content: '强退失败',
           duration: 2,
-          key: 'is-delete-role',
+          key: 'is-logout',
         });
       });
   };
 
-  return { Grid, handleLogout };
+  const userStore = useUserStore();
+  const accessStore = useAccessStore();
+
+  return { Grid, handleLogout, userStore, accessStore };
 };

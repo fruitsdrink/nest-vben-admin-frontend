@@ -156,9 +156,10 @@ watch(
 const heartbeat = () => {
   if (socket.value) {
     const id = userStore.userInfo?.id;
-    socket.value.emit('online-user', { id });
-    socket.value.on('logout', (userId) => {
-      if (userId === userStore.userInfo?.id) {
+    const token = accessStore.accessToken;
+    socket.value.emit('online-user', { id, token });
+    socket.value.on('logout', (userId, token) => {
+      if (userId === userStore.userInfo?.id && token === accessStore.accessToken) {
         accessStore.setLoginExpired(true);
       }
     });

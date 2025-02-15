@@ -6,7 +6,7 @@ import dayjs from 'dayjs';
 
 import { useHook } from './hook';
 
-const { Grid, handleLogout } = useHook();
+const { Grid, handleLogout, userStore, accessStore } = useHook();
 </script>
 
 <template>
@@ -21,8 +21,18 @@ const { Grid, handleLogout } = useHook();
       </template>
 
       <template #action="{ row }">
-        <Popconfirm title="确定强退吗?" @confirm="handleLogout(row.userId)">
-          <Button type="link" danger>强退</Button>
+        <Popconfirm
+          title="确定强退吗?"
+          @confirm="handleLogout(row.userId, row.token)"
+          :disabled="row.userId.toString() === userStore.userInfo?.userId && row.token === accessStore.accessToken"
+        >
+          <Button
+            type="link"
+            danger
+            :disabled="row.userId.toString() === userStore.userInfo?.userId && row.token === accessStore.accessToken"
+          >
+            强退
+          </Button>
         </Popconfirm>
       </template>
     </Grid>

@@ -24,7 +24,7 @@ export namespace OnlineUserApi {
     return requestClient.get<FindListResult<ItemDto>>('/system/online-user', { params });
   }
 
-  export async function logout(userId: number) {
-    return requestClient.post(`/system/online-user/logout`, { userId });
+  export async function logout(userId: number, token: string) {
+    return requestClient.post(`/system/online-user/logout`, { userId, token });
   }
 }
