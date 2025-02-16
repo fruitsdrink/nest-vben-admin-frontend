@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import type { Socket } from 'socket.io-client';
+
 import type { NotificationItem } from '@vben/layouts';
 
 import { computed, onMounted, onUnmounted, ref, watch } from 'vue';
@@ -11,7 +13,7 @@ import { BasicLayout, LockScreen, Notification, UserDropdown } from '@vben/layou
 import { preferences } from '@vben/preferences';
 import { useAccessStore, useUserStore } from '@vben/stores';
 
-import { io, Socket } from 'socket.io-client';
+import { io } from 'socket.io-client';
 
 import { useAuthStore } from '#/store';
 import LoginForm from '#/views/_core/authentication/login.vue';
@@ -66,8 +68,7 @@ const showDot = computed(() =>
 const router = useRouter();
 
 const socket = ref<null | Socket>(null);
-
-const { socketUrl } = useAppConfig(import.meta.env, import.meta.env.PROD);
+const oldSocketId = ref('');
 
 const { EditPasswordFormModal, handleEditPassword } = useHook();
 
@@ -153,54 +154,54 @@ watch(
   },
 );
 
-const heartbeat = () => {
-  if (socket.value) {
-    const id = userStore.userInfo?.id;
-    const token = accessStore.accessToken;
-    socket.value.emit('online-user', { id, token });
-    socket.value.on('logout', (userId, token) => {
-      if (userId === userStore.userInfo?.id && token === accessStore.accessToken) {
-        accessStore.setLoginExpired(true);
-      }
-    });
-  }
+const redirectToLogin = async () => {
+  authStore.logout();
 };
 
-let timer: null | ReturnType<typeof setInterval> = null;
 onMounted(() => {
-  socket.value = io(socketUrl);
-  timer = setInterval(heartbeat, 2000);
-  socket.value.on('notification-change', () => {
-    // 收到通知变化，重新获取
+  const socketUrl = useAppConfig(import.meta.env, import.meta.env.PROD);
+  const newSocket = io(socketUrl.socketUrl);
+  const userId = userStore.userInfo?.id;
+  const token = accessStore.accessToken;
+
+  newSocket.on('connect', () => {
+    const socketId = newSocket.id as string;
+    oldSocketId.value = socketId;
+    newSocket.emit('online', { socketId, userId: Number(userId), token });
+  });
+  newSocket.on('disconnect', () => {
+    newSocket.emit('offline', { socketId: oldSocketId.value });
+  });
+
+  newSocket.on('notification-change', () => {
     handleRefresh();
   });
-  socket.value.on('permission-change', (roleId: number) => {
-    // 收到权限变化，重新获取
+  newSocket.on('permission-change', (roleId: number) => {
     if (!userStore.userInfo?.isAdmin && userStore.userInfo?.roles?.some((item) => item === String(roleId))) {
-      accessStore.setLoginExpired(true);
+      redirectToLogin();
     }
   });
-  socket.value.on('role-change', (roleId: number) => {
-    // 收到权限变化，重新获取
+  newSocket.on('role-change', (roleId: number) => {
     if (!userStore.userInfo?.isAdmin && userStore.userInfo?.roles?.some((item) => item === String(roleId))) {
-      accessStore.setLoginExpired(true);
+      redirectToLogin();
     }
   });
-  socket.value.on('user-change', (userId: number) => {
-    // 收到权限变化，重新获取
+  newSocket.on('user-change', (userId: number) => {
     if (!userStore.userInfo?.isAdmin && userStore.userInfo?.id === userId) {
-      accessStore.setLoginExpired(true);
+      redirectToLogin();
     }
   });
+  newSocket.on('logout', (userId: number, token: string) => {
+    if (Number(userId) === Number(userStore.userInfo?.id) && token === accessStore.accessToken) {
+      redirectToLogin();
+    }
+  });
+
+  socket.value = newSocket;
 });
 
 onUnmounted(() => {
-  if (socket.value) {
-    socket.value.disconnect();
-  }
-  if (timer) {
-    clearInterval(timer);
-  }
+  socket.value?.emit('offline', { socketId: oldSocketId.value });
 });
 </script>
 

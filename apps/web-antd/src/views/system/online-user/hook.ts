@@ -84,6 +84,10 @@ export const useHook = () => {
     gridOptions,
   });
 
+  // socketStore.onLogout(() => {
+  //   gridApi.reload();
+  // });
+
   const handleLogout = async (id: number, token: string) => {
     message.loading({
       content: '正在提交中...',

@@ -24,12 +24,16 @@ const { Grid, handleLogout, userStore, accessStore } = useHook();
         <Popconfirm
           title="确定强退吗?"
           @confirm="handleLogout(row.userId, row.token)"
-          :disabled="row.userId.toString() === userStore.userInfo?.userId && row.token === accessStore.accessToken"
+          :disabled="
+            row.userId.toString() === userStore.userInfo?.userId.toString() && row.token === accessStore.accessToken
+          "
         >
           <Button
             type="link"
             danger
-            :disabled="row.userId.toString() === userStore.userInfo?.userId && row.token === accessStore.accessToken"
+            :disabled="
+              row.userId.toString() === userStore.userInfo?.userId.toString() && row.token === accessStore.accessToken
+            "
           >
             强退
           </Button>
