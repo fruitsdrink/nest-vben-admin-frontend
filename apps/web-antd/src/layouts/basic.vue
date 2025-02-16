@@ -15,6 +15,7 @@ import { useAccessStore, useUserStore } from '@vben/stores';
 
 import { io } from 'socket.io-client';
 
+import { refreshTokenApi } from '#/api';
 import { useAuthStore } from '#/store';
 import LoginForm from '#/views/_core/authentication/login.vue';
 import { useHook } from '#/views/baseinfo/user/hook';
@@ -194,6 +195,17 @@ onMounted(() => {
   newSocket.on('logout', (userId: number, token: string) => {
     if (Number(userId) === Number(userStore.userInfo?.id) && token === accessStore.accessToken) {
       redirectToLogin();
+    }
+  });
+  newSocket.on('refresh-token', async (args: { token: string; userId: number }) => {
+    const { userId, token } = args;
+
+    if (Number(userId) === Number(userStore.userInfo?.id) && token === accessStore.accessToken) {
+      // 刷新token
+      const accessStore = useAccessStore();
+      const resp = await refreshTokenApi();
+      const newToken = resp.data;
+      accessStore.setAccessToken(newToken);
     }
   });
 
